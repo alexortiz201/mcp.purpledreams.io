@@ -4,13 +4,22 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
+		"dev": "concurrently -n widgets,worker -c cyan,magenta \"npm run dev:widgets -- --watch\" \"npm run dev:worker\"",
+		"dev:widgets": "vite build --watch --config vite.config.widgets.ts",
+		"dev:worker": "wrangler dev --local",
 		"deploy": "npm run build && wrangler deploy",
-		"dev": "vite",
-		"build": "tsc -b && vite build",
+		"build": "concurrently -n widgets,worker -c cyan,magenta \"npm run build:widgets\" \"npm run build:worker\"",
+		"build:widgets": "vite build --config vite.config.widgets.ts",
+		"prebuild:worker": "node -e \"require('fs').writeFileSync('worker/build-timestamp.ts', 'export const BUILD_TIMESTAMP = \\'' + Date.now() + '\\'')\"",
+		"build:worker": "wrangler build",
 		"lint-format": "biome check",
 		"lint-format-fix": "biome check --write",
 		"preview": "vite preview",
-		"typecheck": "tsc --noEmit"
+		"generate-types": "wrangler types ./types/worker-configuration.d.ts",
+		"pretypecheck": "npm run generate-types",
+		"typecheck": "tsc --noEmit",
+		"inspect": "inspector",
+		"validate": "concurrently --kill-others-on-fail -n lint-format-fix,build,typecheck -c green,yellow,blue,magenta \"npm run lint-format-fix\" \"npm run build\" \"npm run typecheck\""
 	},
 	"dependencies": {
 		"@epic-web/invariant": "^1.0.0",
@@ -33,7 +42,6 @@
 		"concurrently": "^9.2.1",
 		"globals": "^16.4.0",
 		"typescript": "^5.9.3",
-		"typescript-eslint": "^8.46.1",
 		"vite": "npm:rolldown-vite@7.1.14",
 		"wrangler": "^4.42.2"
 	},
