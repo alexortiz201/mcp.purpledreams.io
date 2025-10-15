@@ -4,6 +4,7 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
+		"deploy": "npm run build && wrangler deploy",
 		"dev": "vite",
 		"build": "tsc -b && vite build",
 		"lint-format": "biome check",
@@ -13,25 +14,28 @@
 	},
 	"dependencies": {
 		"@epic-web/invariant": "^1.0.0",
+		"@mcp-ui/server": "5.12.0",
 		"@modelcontextprotocol/sdk": "^1.20.0",
 		"@remix-run/dom": "^0.0.0-experimental-remix-jam.6",
 		"@remix-run/events": "^0.0.0-experimental-remix-jam.5",
+		"@remix-run/fetch-router": "^0.6.0",
 		"agents": "^0.2.13",
 		"zod": "^3.25.76"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.2.6",
+		"@cloudflare/vite-plugin": "^1.13.12",
+		"@cloudflare/workers-types": "^4.20251011.0",
 		"@epic-web/config": "^1.21.3",
+		"@mcpjam/inspector": "^1.0.4",
+		"@modelcontextprotocol/inspector": "^0.17.0",
 		"@types/node": "^24.7.2",
-		"@types/react": "^19.2.2",
-		"@types/react-dom": "^19.2.2",
-		"@vitejs/plugin-react": "^5.0.4",
-		"eslint-plugin-react-hooks": "^7.0.0",
-		"eslint-plugin-react-refresh": "^0.4.23",
+		"concurrently": "^9.2.1",
 		"globals": "^16.4.0",
-		"typescript": "~5.9.3",
+		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.46.1",
-		"vite": "npm:rolldown-vite@7.1.14"
+		"vite": "npm:rolldown-vite@7.1.14",
+		"wrangler": "^4.42.2"
 	},
 	"overrides": {
 		"vite": "npm:rolldown-vite@7.1.14"
