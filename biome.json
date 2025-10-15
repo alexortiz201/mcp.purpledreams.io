@@ -283,8 +283,7 @@
 		"enabled": true,
 		"actions": {
 			"source": {
-				"organizeImports": "on",
-				"useSortedProperties": "on"
+				"organizeImports": "on"
 			}
 		}
 	}
