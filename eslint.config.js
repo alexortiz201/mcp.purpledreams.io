@@ -1,4 +1,4 @@
-import { config as defaultConfig } from "@epic-web/config/eslint";
+import { config as defaultConfig } from "@epic-web/config/eslint"
 
 /** @type {import("eslint").Linter.Config[]} */
 export default [
@@ -6,4 +6,4 @@ export default [
 	{
 		ignores: ["./.wrangler/**"],
 	},
-];
+]
