@@ -1,9 +1,10 @@
 import { invariant } from "@epic-web/invariant"
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
-import { renderToString } from "@remix-run/dom/server"
 import { McpAgent } from "agents/mcp"
 import { getCorsHeaders, withCors } from "./utils/utils-requests.ts"
+import { getResourceRenderToString } from "./widgets/utils/utils-mcp-ui.tsx"
 
+// biome-ignore lint/complexity/noBannedTypes: WIP
 export type State = {}
 export type Props = {
 	baseUrl: string
@@ -29,21 +30,6 @@ export class PurpleDreamsMCP extends McpAgent<Env, State, Props> {
 		)
 		return baseUrl
 	}
-}
-
-const Node = ({ resourceUrl }: { resourceUrl: string }) => {
-	return (
-		<html lang="en">
-			<head>
-				<meta charSet="utf-8" />
-				<meta name="color-scheme" content="light dark" />
-				<script src={resourceUrl} type="module" />
-			</head>
-			<body css={{ margin: 0 }}>
-				<div id="💿" />
-			</body>
-		</html>
-	)
 }
 
 export default {
@@ -76,8 +62,8 @@ export default {
 				const getResourceUrl = (resourcePath: string) =>
 					new URL(resourcePath, url.origin).toString()
 				return new Response(
-					await renderToString(
-						<Node resourceUrl={getResourceUrl("/widgets/calculator.js")} />
+					await getResourceRenderToString(
+						getResourceUrl("/widgets/calculator.js")
 					),
 					{
 						headers: {
