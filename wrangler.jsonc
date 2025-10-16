@@ -3,7 +3,7 @@
 	"name": "purpledreams-mcp",
 	"compatibility_date": "2025-10-15",
 	"compatibility_flags": ["nodejs_compat"],
-	"main": "./worker/index.ts",
+	"main": "./worker/index.tsx",
 	"migrations": [
 		{
 			"new_sqlite_classes": ["PurpleDreamsMCP"],
