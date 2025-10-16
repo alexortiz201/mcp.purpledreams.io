@@ -39,11 +39,12 @@
 		"@mcpjam/inspector": "^1.0.4",
 		"@modelcontextprotocol/inspector": "^0.17.0",
 		"@types/node": "^24.7.2",
+		"@vitejs/plugin-react": "^5.0.4",
 		"concurrently": "^9.2.1",
 		"globals": "^16.4.0",
 		"typescript": "^5.9.3",
 		"vite": "npm:rolldown-vite@7.1.14",
-		"wrangler": "^4.42.2"
+		"wrangler": "^4.43.0"
 	},
 	"overrides": {
 		"vite": "npm:rolldown-vite@7.1.14"

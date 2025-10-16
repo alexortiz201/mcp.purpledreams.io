@@ -1,0 +1,25 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "purpledreams-mcp",
+	"compatibility_date": "2025-10-15",
+	"compatibility_flags": ["nodejs_compat"],
+	"main": "./worker/index.ts",
+	"migrations": [
+		{
+			"new_sqlite_classes": ["PurpleDreamsMCP"],
+			"tag": "v1"
+		}
+	],
+
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "PurpleDreamsMCP",
+				"name": "PURPLEDREAMS_MCP_OBJECT"
+			}
+		]
+	},
+	"observability": {
+		"enabled": true
+	}
+}
