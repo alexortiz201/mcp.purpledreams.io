@@ -3,26 +3,21 @@
 // Runtime types generated with workerd@1.20251008.0 2025-10-15 nodejs_compat
 declare namespace Cloudflare {
 	interface GlobalProps {
-		mainModule: typeof import("../worker/index")
-		durableNamespaces: "PurpleDreamsMCP"
+		mainModule: typeof import("../worker/index");
+		durableNamespaces: "PurpleDreamsMCP";
 	}
 	interface Env {
-		CLOUDFLARE_API_TOKEN: string
-		PURPLEDREAMS_MCP_OBJECT: DurableObjectNamespace<
-			import("../worker/index").PurpleDreamsMCP
-		>
-		ASSETS: Fetcher
+		CLOUDFLARE_API_TOKEN: string;
+		PURPLEDREAMS_MCP_OBJECT: DurableObjectNamespace<import("../worker/index").PurpleDreamsMCP>;
+		ASSETS: Fetcher;
 	}
 }
 interface Env extends Cloudflare.Env {}
 type StringifyValues<EnvType extends Record<string, unknown>> = {
-	[Binding in keyof EnvType]: EnvType[Binding] extends string
-		? EnvType[Binding]
-		: string
-}
+	[Binding in keyof EnvType]: EnvType[Binding] extends string ? EnvType[Binding] : string;
+};
 declare namespace NodeJS {
-	interface ProcessEnv
-		extends StringifyValues<Pick<Cloudflare.Env, "CLOUDFLARE_API_TOKEN">> {}
+	interface ProcessEnv extends StringifyValues<Pick<Cloudflare.Env, "CLOUDFLARE_API_TOKEN">> {}
 }
 
 // Begin runtime types
