@@ -4,6 +4,11 @@
 	"compatibility_date": "2025-10-15",
 	"compatibility_flags": ["nodejs_compat"],
 	"main": "./worker/index.tsx",
+	"assets": {
+		"directory": "./dist/public",
+		"binding": "ASSETS"
+	},
+	"tsconfig": "./tsconfig.worker.json",
 	"migrations": [
 		{
 			"new_sqlite_classes": ["PurpleDreamsMCP"],

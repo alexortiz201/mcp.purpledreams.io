@@ -1,5 +1,6 @@
 import fs from "node:fs"
 import path from "node:path"
+import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
 
 // Automatically detect all .tsx files and directories with index.tsx in worker/widgets as build entries
@@ -28,6 +29,8 @@ const entries = Object.fromEntries(
 
 // https://vite.dev/config/
 export default defineConfig({
+	// for rolldown remix build support you need to set jsxImportSource to @remix-run/dom
+	plugins: [react({ jsxImportSource: "@remix-run/dom" })],
 	build: {
 		outDir: "dist/public",
 		rollupOptions: {

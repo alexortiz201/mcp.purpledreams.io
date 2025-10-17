@@ -490,7 +490,7 @@ function App(this: Remix.Handle) {
 			>
 				{steps.slice(0, step).map((step, index, sliced) => (
 					<div
-						key={index}
+						key={`${index}-${step}`}
 						css={{
 							fontSize: "24px",
 							fontWeight: "bold",

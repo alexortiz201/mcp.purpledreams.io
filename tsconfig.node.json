@@ -13,6 +13,8 @@
 		"verbatimModuleSyntax": true,
 		"moduleDetection": "force",
 		"noEmit": true,
+		"jsx": "react-jsx",
+		"jsxImportSource": "@remix-run/dom",
 
 		/* Linting */
 		"strict": true,

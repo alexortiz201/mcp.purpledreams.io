@@ -3,6 +3,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { McpAgent } from "agents/mcp"
 import { getCorsHeaders, withCors } from "./utils/utils-requests.ts"
 import { getResourceRenderToString } from "./widgets/utils/utils-mcp-ui.tsx"
+import { registerWidgets } from "./widgets.tsx"
 
 // biome-ignore lint/complexity/noBannedTypes: WIP
 export type State = {}
@@ -20,7 +21,7 @@ export class PurpleDreamsMCP extends McpAgent<Env, State, Props> {
 		}
 	)
 	async init() {
-		console.log("PurpleDreamsMCP initialized")
+		await registerWidgets(this)
 	}
 	requireDomain() {
 		const baseUrl = this.props?.baseUrl
@@ -51,26 +52,24 @@ export default {
 			}
 
 			// Try to serve static assets
-			/* if (env.ASSETS) {
+			if (env.ASSETS) {
 				const response = await env.ASSETS.fetch(request)
 				if (response.ok) {
 					return response
 				}
-			} */
+			}
 
 			if (url.pathname.startsWith("/__dev/widgets")) {
-				const getResourceUrl = (resourcePath: string) =>
-					new URL(resourcePath, url.origin).toString()
-				return new Response(
-					await getResourceRenderToString(
-						getResourceUrl("/widgets/calculator.js")
-					),
-					{
-						headers: {
-							"Content-Type": "text/html",
-						},
-					}
-				)
+				const htmlString = await getResourceRenderToString({
+					resourcePath: "/widgets/calculator.js",
+					baseUrl: url.origin,
+				})
+
+				return new Response(htmlString, {
+					headers: {
+						"Content-Type": "text/html",
+					},
+				})
 			}
 
 			return new Response(null, { status: 404 })
