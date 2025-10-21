@@ -1,20 +1,25 @@
-// export const LOCALS_KEY = createStorageKey<{ userId: string }>()
 // CORS middleware for all API routes
 // router.map(routes.api, [cors({ origin: "*" })], handlers)
 
 import { createRouter } from "@remix-run/fetch-router"
 import { logger } from "@remix-run/fetch-router/logger-middleware"
-
-import { createFetchWithContext } from "./adapters/utils-context-cloudflare.ts"
-import { storeContext } from "./middleware/context.ts"
+import type { Props } from "../mcp.tsx"
+import { setRequestMeta } from "../utils/utils-requests.ts"
+import { injectContext } from "./middleware/inject-context.ts"
 import { routes } from "./routes.ts"
 import schedule from "./schedule.ts"
 
 const router = createRouter()
-router.use(storeContext)
+
+router.use(injectContext)
 
 if (process.env.NODE_ENV === "development") router.use(logger())
 
 router.map(routes.schedule, schedule.handlers)
 
-export const api = { fetch: createFetchWithContext(router) }
+export const api = {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext<Props>) {
+		setRequestMeta(request, { env, ctx, locals: { userId: "me" } })
+		return router.fetch(request)
+	},
+}

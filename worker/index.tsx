@@ -19,7 +19,7 @@ export default {
 			if (pathname === "/health") return new Response("ok")
 
 			// 🧩 Unified Life-OS API router
-			if (pathname.startsWith("/api")) return api.fetch(request, env, ctx)
+			if (pathname.startsWith("/api")) return await api.fetch(request, env, ctx)
 
 			// 🧠 MCP server
 			if (url.pathname === "/mcp") {

@@ -1,3 +1,5 @@
+import type { Props } from "../mcp"
+
 const CORS_HEADERS = {
 	"Access-Control-Allow-Origin": "*",
 	"Access-Control-Allow-Methods": "GET, POST, OPTIONS",
@@ -65,4 +67,22 @@ export function mergeHeaders(
 		}
 	}
 	return merged
+}
+
+export type RequestMeta = {
+	env: Env
+	ctx: ExecutionContext<Props>
+	locals?: Record<string, unknown>
+}
+
+const requestMeta = new WeakMap<Request, RequestMeta>()
+
+export function setRequestMeta(req: Request, meta: RequestMeta) {
+	requestMeta.set(req, meta)
+}
+export function takeRequestMeta(req: Request): RequestMeta | undefined {
+	const meta = requestMeta.get(req)
+	// optional: cleanup to avoid holding references longer than needed
+	if (meta) requestMeta.delete(req)
+	return meta
 }
