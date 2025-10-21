@@ -1,5 +1,5 @@
 import { type Props, PurpleDreamsMCP } from "./mcp.tsx"
-import { api } from "./routes/api"
+import { api } from "./routes/router.ts"
 import { getCorsHeaders, withCors } from "./utils/utils-requests.ts"
 import { getResourceRenderToString } from "./widgets/utils/utils-mcp-ui.tsx"
 

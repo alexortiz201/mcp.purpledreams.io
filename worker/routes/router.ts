@@ -6,14 +6,15 @@ import { createRouter } from "@remix-run/fetch-router"
 import { logger } from "@remix-run/fetch-router/logger-middleware"
 
 import { createFetchWithContext } from "./adapters/utils-context-cloudflare.ts"
-import { storeContext } from "./middleware/context"
-import { scheduleRouter } from "./schedule"
+import { storeContext } from "./middleware/context.ts"
+import { routes } from "./routes.ts"
+import schedule from "./schedule.ts"
 
 const router = createRouter()
 router.use(storeContext)
 
 if (process.env.NODE_ENV === "development") router.use(logger())
 
-router.mount("/schedule", scheduleRouter)
+router.map(routes.schedule, schedule.handlers)
 
 export const api = { fetch: createFetchWithContext(router) }
