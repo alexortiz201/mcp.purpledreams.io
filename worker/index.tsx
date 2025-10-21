@@ -1,37 +1,9 @@
-import { invariant } from "@epic-web/invariant"
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
-import { McpAgent } from "agents/mcp"
+import { type Props, PurpleDreamsMCP } from "./mcp.tsx"
+import { api } from "./routes/api"
 import { getCorsHeaders, withCors } from "./utils/utils-requests.ts"
 import { getResourceRenderToString } from "./widgets/utils/utils-mcp-ui.tsx"
-import { registerWidgets } from "./widgets.tsx"
 
-// biome-ignore lint/complexity/noBannedTypes: WIP
-export type State = {}
-export type Props = {
-	baseUrl: string
-}
-export class PurpleDreamsMCP extends McpAgent<Env, State, Props> {
-	server = new McpServer(
-		{
-			name: "PurpleDreamsMCP",
-			version: "1.0.0",
-		},
-		{
-			instructions: `Use this server to talk to my purple dreams.`,
-		}
-	)
-	async init() {
-		await registerWidgets(this)
-	}
-	requireDomain() {
-		const baseUrl = this.props?.baseUrl
-		invariant(
-			baseUrl,
-			"This should never happen, but somehow we did not get the baseUrl from the request handler"
-		)
-		return baseUrl
-	}
-}
+export { PurpleDreamsMCP }
 
 export default {
 	fetch: withCors({
@@ -42,7 +14,14 @@ export default {
 			ctx: ExecutionContext<Props>
 		) => {
 			const url = new URL(request.url)
+			const { pathname } = url
 
+			if (pathname === "/health") return new Response("ok")
+
+			// 🧩 Unified Life-OS API router
+			if (pathname.startsWith("/api")) return api.fetch(request, env, ctx)
+
+			// 🧠 MCP server
 			if (url.pathname === "/mcp") {
 				ctx.props.baseUrl = url.origin
 
@@ -51,28 +30,24 @@ export default {
 				}).fetch(request, env, ctx)
 			}
 
-			// Try to serve static assets
-			if (env.ASSETS) {
-				const response = await env.ASSETS.fetch(request)
-				if (response.ok) {
-					return response
-				}
-			}
-
-			if (url.pathname.startsWith("/__dev/widgets")) {
+			// 🧪 Widget preview
+			if (pathname.startsWith("/__dev/widgets")) {
 				const htmlString = await getResourceRenderToString({
 					resourcePath: "/widgets/calculator.js",
 					baseUrl: url.origin,
 				})
-
 				return new Response(htmlString, {
-					headers: {
-						"Content-Type": "text/html",
-					},
+					headers: { "Content-Type": "text/html" },
 				})
 			}
 
-			return new Response(null, { status: 404 })
+			// 📦 Static assets
+			if (env.ASSETS) {
+				const resp = await env.ASSETS.fetch(request)
+				if (resp.ok) return resp
+			}
+
+			return new Response("Not Found", { status: 404 })
 		},
 	}),
 }

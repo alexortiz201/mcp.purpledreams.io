@@ -1,7 +1,7 @@
 import { type CreateUIResourceOptions, createUIResource } from "@mcp-ui/server"
 import { type ZodRawShape, z } from "zod"
 import { BUILD_TIMESTAMP } from "./build-timestamp.ts"
-import type { PurpleDreamsMCP } from "./index.tsx"
+import type { PurpleDreamsMCP } from "./mcp.tsx"
 import { getResourceRenderToString } from "./widgets/utils/utils-mcp-ui.tsx"
 
 const version = BUILD_TIMESTAMP
