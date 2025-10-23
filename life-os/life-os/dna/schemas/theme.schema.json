@@ -1,0 +1,49 @@
+{
+	"$id": "https://life-os.dev/schema/theme.schema.json",
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"title": "Life-OS Theme Manifest",
+	"type": "object",
+	"required": ["name", "version", "schema", "targets"],
+	"properties": {
+		"name": { "type": "string", "minLength": 1 },
+		"version": { "type": "string", "minLength": 1 },
+		"schema": {
+			"type": "object",
+			"required": ["contract"],
+			"properties": {
+				"contract": {
+					"type": "string",
+					"description": "Semantic version of the theme contract this theme targets (e.g. 1.0.0)."
+				}
+			},
+			"additionalProperties": false
+		},
+		"targets": {
+			"type": "array",
+			"items": {
+				"enum": ["weekly", "daily", "project", "task", "system"]
+			},
+			"description": "Which high-level artifacts this theme overrides."
+		},
+		"priority": {
+			"type": "number",
+			"default": 0,
+			"description": "Higher wins when layering multiple themes."
+		},
+		"tokens": {
+			"$ref": "./theme.tokens.schema.json",
+			"description": "Optional design tokens (colors, radius, typography, etc.)."
+		},
+		"templates": {
+			"type": "object",
+			"description": "Template overrides keyed by artifact id (e.g. weekly.dashboard). Values are Markdown or string templates.",
+			"additionalProperties": { "type": "string" }
+		},
+		"assets": {
+			"type": "object",
+			"description": "Static assets keyed by id (svg/png/css). Values are inlined content or relative paths resolved by the theme package.",
+			"additionalProperties": { "type": "string" }
+		}
+	},
+	"additionalProperties": false
+}

@@ -24,6 +24,7 @@
 		"clean": "rimraf dist || rm -rf dist"
 	},
 	"devDependencies": {
+		"zod": "^3.25.6",
 		"typescript": "^5.9.3",
 		"rimraf": "^6.0.1"
 	}

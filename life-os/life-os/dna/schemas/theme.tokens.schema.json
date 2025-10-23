@@ -1,0 +1,33 @@
+{
+	"$id": "https://life-os.dev/schema/theme.tokens.schema.json",
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"title": "Life-OS Theme Tokens",
+	"type": "object",
+	"properties": {
+		"color": {
+			"type": "object",
+			"additionalProperties": { "type": "string" },
+			"description": "Named colors (e.g. primary, surface, accent)."
+		},
+		"radius": { "type": "number", "minimum": 0 },
+		"spacing": {
+			"type": "object",
+			"additionalProperties": { "type": "number" },
+			"description": "Spacing scale (px)."
+		},
+		"typography": {
+			"type": "object",
+			"properties": {
+				"fontFamily": { "type": "string" },
+				"headingScale": {
+					"type": "array",
+					"items": { "type": "number" },
+					"description": "H1..H5 sizes."
+				},
+				"bodySize": { "type": "number" }
+			},
+			"additionalProperties": true
+		}
+	},
+	"additionalProperties": true
+}
