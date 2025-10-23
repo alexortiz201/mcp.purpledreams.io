@@ -2,6 +2,20 @@
 {
 	"version": 1,
 	"actions": {
+		"start_experience_setup": {
+			"description": "Run the Life-OS intake to gather vision, goals, rhythm, and theme to seed initial artifacts.",
+			"module": "experience.intake.v2",
+			"output": {
+				"writeTokens": true,
+				"buildTargets": [
+					"persona.sheet",
+					"daily.journal",
+					"learning.archive",
+					"blockers.shadow",
+					"weekly.dashboard"
+				]
+			}
+		},
 		"suggest_next_inputs": {
 			"intent": "Generate weekly suggestions and surface Top 3",
 			"reads": [
