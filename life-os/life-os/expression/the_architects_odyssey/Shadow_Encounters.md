@@ -1,0 +1,1 @@
+- Resistance to Leetcode → 20-min sprint (+25 XP)

@@ -1,0 +1,15 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"rootDir": "./",
+		"outDir": "../../dist/orchestrator",
+		"declaration": true,
+		"composite": true
+	},
+	"include": ["./**/*.ts"],
+	"references": [
+		{
+			"path": "../types"
+		}
+	]
+}

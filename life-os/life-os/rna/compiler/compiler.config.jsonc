@@ -1,0 +1,14 @@
+
+{
+  "input_root": "../life-os-dna/",
+  "output_root": "../life-os-expression/default/",
+  "theme_merge": {
+    "enabled": true,
+    "theme_root": "../life-os-rna/life-os-themes/the-architects-odyssey",
+    "mappings": { "Goal": "Realm", "Project": "Arc", "Task": "Quest" }
+  },
+  "rules": {
+    "copy_inputs": ["/core-system/inputs/*"],
+    "render_templates": ["/templates/**"]
+  }
+}

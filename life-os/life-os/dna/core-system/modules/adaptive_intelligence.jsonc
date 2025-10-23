@@ -1,0 +1,23 @@
+
+{
+  "id": "adaptive_intelligence",
+  "label": "Adaptive Intelligence Layer",
+  "description": "Generates weekly suggestions and guidance from reflections and active projects.",
+  "input_sources": [
+    "/private/logs/daily/*",
+    "/private/logs/weekly/*",
+    "/core-system/inputs/Adaptive_Suggestions.md",
+    "/core-system/inputs/Curated_List.md"
+  ],
+  "signals": {
+    "read_tags": ["#arc/*", "#domain/*", "#status/*"]
+  },
+  "outputs": [
+    "/core-system/inputs/Adaptive_Suggestions.md",
+    "/core-system/inputs/Curated_List.md"
+  ],
+  "api": {
+    "mcp_endpoint": "/suggestions/update",
+    "auth_required": true
+  }
+}

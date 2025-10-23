@@ -1,0 +1,2 @@
+- Learn one new animation technique
+- Add tracing to service

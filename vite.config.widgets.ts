@@ -33,9 +33,11 @@ export default defineConfig({
 	plugins: [react({ jsxImportSource: "@remix-run/dom" })],
 	build: {
 		outDir: "dist/public",
-		rollupOptions: {
+		rolldownOptions: {
+			// treeshake: true,
 			input: entries,
 			output: {
+				// sourcemap: true,
 				entryFileNames: "widgets/[name].js",
 				format: "es",
 			},

@@ -1,0 +1,25 @@
+
+// High-level actions the AI/agent can perform against the system.
+{
+  "version": 1,
+  "actions": {
+    "suggest_next_inputs": {
+      "intent": "Generate weekly suggestions and surface Top 3",
+      "reads": ["/core-system/inputs/adaptive_suggestions.md","/private/logs/daily/*","/private/logs/weekly/*"],
+      "writes": ["/core-system/inputs/adaptive_suggestions.md","/core-system/inputs/curated_list.md"],
+      "calls": ["suggestions.update"]
+    },
+    "make_weekly_schedule": {
+      "intent": "Create a customized time-blocked plan",
+      "reads": ["/core-system/weekly/weekly-dashboard.meta.jsonc","/core-system/wealth/*"],
+      "writes?": ["/private/logs/weekly/*"],
+      "calls": ["schedule.generate"]
+    },
+    "weekly_rollup": {
+      "intent": "Summarize XP and patterns; propose next shifts",
+      "reads": ["/private/logs/weekly/*","/core-system/inputs/curated_list.md"],
+      "writes": ["/core-system/weekly/weekly-sync.md"],
+      "calls": ["rollups.weekly"]
+    }
+  }
+}

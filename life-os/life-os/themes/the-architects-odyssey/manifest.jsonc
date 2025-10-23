@@ -1,0 +1,198 @@
+// JSONC — The Architect's Odyssey (theme skin + expression mapping)
+{
+	"theme_name": "The_Architects_Odyssey",
+	"version": "1.1.0",
+	"description": "Anime × RPG narrative overlay for the Core System.",
+
+	// ─────────────────────────────────────────────────────────────────────────────
+	// 1) Semantic mappings: how DNA concepts map into this theme's vocabulary
+	// ─────────────────────────────────────────────────────────────────────────────
+	"mappings": {
+		"concepts": {
+			// DNA → Theme
+			"goal": { "as": "realm", "icon": "🎯" },
+			"project": { "as": "arc", "icon": "🧱" },
+			"task": { "as": "quest", "icon": "⚔️" }
+		},
+		"taskTypes": {
+			// DNA tasks.types → Theme quest classes
+			"main": { "as": "main_quest", "icon": "🏆" },
+			"side": { "as": "side_quest", "icon": "🛠️" },
+			"daily": { "as": "daily_quest", "icon": "🗓️" },
+			"shadow": { "as": "shadow_quest", "icon": "🕳️" },
+			"event": { "as": "event_quest", "icon": "✨" }
+		},
+		// Optional: normalize tags in Expression for consistent queries
+		"tags": {
+			"realm": "realm/",
+			"arc": "arc/",
+			"quest": "quest/",
+			"phase": "phase/"
+		}
+	},
+
+	// ─────────────────────────────────────────────────────────────────────────────
+	// 2) Theme vocabulary: named Realms/Arcs that the skin exposes by default
+	//    (RNA can enrich/override from DNA if names match)
+	// ─────────────────────────────────────────────────────────────────────────────
+	"realms": {
+		"wealth": { "label": "Wealth Realm — The Forge", "icon": "💰" },
+		"love": { "label": "Love Realm — The Hearth", "icon": "❤️" },
+		"health": { "label": "Health Realm — The Arena", "icon": "⚽" },
+		"evolution": { "label": "Evolution Realm — The Sanctum", "icon": "🔮" }
+	},
+	"arcs": {
+		"front_end": {
+			"label": "Front-End Arc — The Flowwright",
+			"file": "The_Architects_Odyssey/Arcs/Front_End_Arc.md"
+		},
+		"mcp": {
+			"label": "MCP Arc — Keeper of Protocols",
+			"file": "The_Architects_Odyssey/Arcs/MCP_Arc.md"
+		},
+		"recovery": {
+			"label": "Recovery Arc — The Patient Warrior",
+			"file": "The_Architects_Odyssey/Arcs/Recovery_Arc.md"
+		},
+		"integration": {
+			"label": "Integration Arc — The Sage’s Thread",
+			"file": "The_Architects_Odyssey/Arcs/Integration_Arc.md"
+		}
+	},
+
+	// ─────────────────────────────────────────────────────────────────────────────
+	// 3) Expression layout contract: where the compiler should write artifacts
+	// ─────────────────────────────────────────────────────────────────────────────
+	"expression": {
+		// root output folder inside life-os-expression
+		"root": "Themes/The_Architects_Odyssey",
+		"folders": {
+			"dashboards": "Dashboards",
+			"lore": "Lore",
+			"data": "Data",
+			"quests": "Quests",
+			"arcs": "Arcs",
+			"realms": "Realms"
+		},
+		// stable file paths for entry points (used by UI + AI)
+		"entrypoints": {
+			"core_weekly": "Core_System/Weekly_Dashboard.md",
+			"core_toggle": "Core_System/Mode_Toggle.md",
+			"lore_character": "Themes/The_Architects_Odyssey/Lore/Character_Sheet.md",
+			"lore_toggle": "Themes/The_Architects_Odyssey/Lore/Return_To_Core.md"
+		},
+		// synth files the compiler should (re)generate
+		"artifacts": {
+			"dashboards": [
+				{
+					"file": "Dashboards/Weekly_Dashboard.md",
+					"template": "weekly_dashboard.md"
+				},
+				{
+					"file": "Dashboards/Monthly_Review.md",
+					"template": "monthly_review.md"
+				}
+			],
+			"quests": [
+				{ "file": "Quests/Main_Quests.md", "template": "quests_main.md" },
+				{ "file": "Quests/Side_Quests.md", "template": "quests_side.md" },
+				{ "file": "Quests/Daily_Quests.md", "template": "quests_daily.md" }
+			],
+			"lore": [
+				{ "file": "Lore/Character_Sheet.md", "template": "character_sheet.md" },
+				{ "file": "Lore/Return_To_Core.md", "template": "return_to_core.md" }
+			],
+			"data": [
+				{ "file": "Data/xp_log.json", "template": "xp_log.json.tpl" },
+				{ "file": "Data/phase_state.json", "template": "phase_state.json.tpl" },
+				{
+					"file": "Data/relationships.json",
+					"template": "relationships.json.tpl"
+				}
+			]
+		}
+	},
+
+	// ─────────────────────────────────────────────────────────────────────────────
+	// 4) Templates: where RNA should look for source templates referenced above
+	// ─────────────────────────────────────────────────────────────────────────────
+	"templates": {
+		// relative to this theme package (life-os-rna/life-os-themes/the-architects-odyssey/templates/)
+		"folder": "./templates",
+		"files": {
+			"weekly_dashboard.md": "dashboards/weekly_dashboard.md",
+			"monthly_review.md": "dashboards/monthly_review.md",
+			"quests_main.md": "quests/main.md",
+			"quests_side.md": "quests/side.md",
+			"quests_daily.md": "quests/daily.md",
+			"character_sheet.md": "lore/character_sheet.md",
+			"return_to_core.md": "lore/return_to_core.md",
+			"xp_log.json.tpl": "data/xp_log.json.tpl",
+			"phase_state.json.tpl": "data/phase_state.json.tpl",
+			"relationships.json.tpl": "data/relationships.json.tpl"
+		}
+	},
+
+	// ─────────────────────────────────────────────────────────────────────────────
+	// 5) Adapters: how DNA fields should be renamed/skinned inside this theme
+	// ─────────────────────────────────────────────────────────────────────────────
+	"adapters": {
+		"frontmatter": {
+			// Rename keys when emitting markdown
+			"goal": "realm",
+			"project": "arc",
+			"task": "quest",
+			"taskType": "questType"
+		},
+		"tags": {
+			// Prepend prefixes to normalize downstream queries
+			"realm": "realm/",
+			"arc": "arc/",
+			"quest": "quest/",
+			"phase": "phase/"
+		},
+		"naming": {
+			// File naming for generated Quest notes (if you later split quests into files)
+			"questFile": "{date}_{questType}_{slug}.md",
+			// Arc files will live under /Arcs with this naming
+			"arcFile": "{realm}_{arc}.md"
+		}
+	},
+
+	// ─────────────────────────────────────────────────────────────────────────────
+	// 6) AI navigation hints: help agents auto-locate key docs and reason about graph
+	// ─────────────────────────────────────────────────────────────────────────────
+	"ai_hints": {
+		"entry": {
+			"core": "Core_System/Weekly_Dashboard.md",
+			"lore": "Themes/The_Architects_Odyssey/Lore/Character_Sheet.md"
+		},
+		"graph": {
+			"nodes": ["realm", "arc", "quest", "phase"],
+			"edges": [
+				{ "from": "realm", "to": "arc", "type": "contains" },
+				{ "from": "arc", "to": "quest", "type": "contains" }
+			],
+			"inheritance": {
+				// tags inherited down the tree for easy filtering
+				"realmTag": "realm/{realm}",
+				"arcTag": "arc/{arc}"
+			}
+		}
+	},
+
+	// ─────────────────────────────────────────────────────────────────────────────
+	// 7) Validation rules (optional, but great for fast-fail in the compiler)
+	// ─────────────────────────────────────────────────────────────────────────────
+	"validation": {
+		"requireRealms": ["wealth", "love", "health", "evolution"],
+		"requireFiles": [
+			"Dashboards/Weekly_Dashboard.md",
+			"Lore/Character_Sheet.md"
+		],
+		"max": {
+			"arcsPerRealm": 5,
+			"questsPerArc": 100
+		}
+	}
+}

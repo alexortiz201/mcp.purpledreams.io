@@ -1,0 +1,34 @@
+
+// Contracts the RNA/app must implement so AI can act deterministically.
+{
+  "version": 1,
+  "endpoints": {
+    "suggestions.update": {
+      "method": "POST",
+      "path": "/api/suggestions/update",
+      "input": { "daysBack": "number (default: 14)", "domains": "string[]" },
+      "output": { "status": "ok|error", "written": "number", "files": "string[]" },
+      "writes": ["/core-system/inputs/adaptive_suggestions.md","/core-system/inputs/curated_list.md"]
+    },
+    "schedule.generate": {
+      "method": "POST",
+      "path": "/api/schedule/generate",
+      "input": { "weekISO": "YYYY-Www", "save": "boolean (default:false)" },
+      "output": { "status": "ok|error", "schedule": "WeeklySchedule", "file?": "string" },
+      "writes?": ["/private/logs/weekly/* Dashboard.md"]
+    },
+    "rollups.weekly": {
+      "method": "POST",
+      "path": "/api/rollups/weekly",
+      "input": { "weekISO": "YYYY-Www" },
+      "output": { "status": "ok|error", "summary": "markdown", "metrics": { "xp": "number", "byDomain": "Record<string, number>" } },
+      "writes?": ["/core-system/weekly/weekly-sync.md"]
+    }
+  },
+  "types": {
+    "WeeklySchedule": {
+      "week": "string",
+      "blocks": "Record<string, Array<{start:string,end:string,module:string,notes?:string}>>"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+
+// Minimal, declarative compile rules (DNA -> Expression). RNA consumes this.
+{
+  "version": 1,
+  "inputs": {
+    "root": "./",
+    "templates": "/templates/**",
+    "meta": "/core-system/weekly/weekly-dashboard.meta.jsonc"
+  },
+  "outputs": { "expressionRoot": "../life-os-expression/default/" },
+  "mapping": { "concepts": { "Goal": "Realm", "Project": "Arc", "Task": "Quest" } },
+  "render": [
+    { "from": "/templates/weekly/weekly-dashboard.md", "to": "/default/Wealth/Weekly_Dashboard.md", "tokens": ["WEEK_THEME","FOCUS_PROJECT","TOP_SUGGESTIONS"] },
+    { "from": "/templates/daily/new-journal-entry.md", "to": "/default/Wealth/Daily_Journal_Template.md", "tokens": [] }
+  ],
+  "copy": [ { "from": "/core-system/inputs/*", "to": "/default/Wealth/Inputs/" } ]
+}

@@ -1,0 +1,15 @@
+
+{
+  "accessible": [
+    "/core-system/reflections.md",
+    "/core-system/weekly/weekly-dashboard.md",
+    "/core-system/inputs/curated_list.md"
+  ],
+  "restricted": [
+    "/private/logs/*",
+    "/private/personal_context.md"
+  ],
+  "ai_guidance": {
+    "rule": "AI should prefer summaries; never parse /private directly without explicit consent."
+  }
+}

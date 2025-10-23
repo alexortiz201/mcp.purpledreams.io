@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Task",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "projectId",
+    "kind",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "projectId": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "main",
+        "side",
+        "daily",
+        "shadow",
+        "event"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Planned",
+        "InProgress",
+        "Done"
+      ]
+    },
+    "xp": {
+      "type": [
+        "number",
+        "string"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

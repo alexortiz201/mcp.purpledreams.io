@@ -1,0 +1,15 @@
+
+{
+  "tags": {
+    "layer": ["Core_System", "Templates", "Private", "Expansion", "Themes"],
+    "domain": ["Wealth", "Health", "Love", "Evolution"],
+    "type": ["Goal", "Project", "Task", "Log", "Arc"],
+    "status": ["Active", "Paused", "Completed"],
+    "ai": ["Adaptive", "Oracle"]
+  },
+  "examples": {
+    "arc": { "tags": ["layer/Core_System", "domain/Wealth", "type/Arc", "status/Active"] },
+    "log": { "tags": ["layer/Private", "type/Log", "scope/Personal"] },
+    "ai_module": { "tags": ["layer/Expansion", "ai/Adaptive"] }
+  }
+}

@@ -1,0 +1,2 @@
+- Protocol Stone (MCP)
+- Vitality Crystal (Recovery)
