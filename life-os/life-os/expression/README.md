@@ -1,7 +1,7 @@
 
 # 💎 Life-OS Expression — Human Experience Layer
 
-> **Purpose:** Present your living system through readable, interactive, and evolving artifacts.  
+> **Purpose:** Present your living system through readable, interactive, and evolving artifacts.
 > **Scope:** Generated notes, dashboards, and UI widgets produced from RNA transformations.
 
 ---
@@ -57,7 +57,7 @@ life-os-expression/
 
 Expression files are **regenerated dynamically** whenever Life-OS compiles.
 
-They are treated as ephemeral “living documents” — version-controlled snapshots of your current state.  
+They are treated as ephemeral “living documents” — version-controlled snapshots of your current state.
 For example:
 - Completing a “Shadow Quest” updates `XP_Log.md`
 - Completing a weekly sync triggers a new “Focus Arc” suggestion
@@ -68,7 +68,6 @@ For example:
 
 | Integration | Description |
 |:--|:--|
-| 🪶 **Obsidian** | Syncs all `.md` dashboards and reflections |
 | 🤖 **MCP Server** | Serves expression widgets to AI agents |
 | ☁️ **Cloudflare Workers** | Optional backend for XP persistence |
 
@@ -76,8 +75,8 @@ For example:
 
 ## 🔮 Future Extensions
 
-- `life-os-expression-web`: Render dashboards in browser widgets  
-- Graph overlays for XP + Time tracking  
+- `life-os-expression-web`: Render dashboards in browser widgets
+- Graph overlays for XP + Time tracking
 - AI journaling assistant integration
 
 ---
