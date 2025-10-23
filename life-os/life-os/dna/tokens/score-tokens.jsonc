@@ -1,12 +1,17 @@
-
 {
-  "xp": {
-    "base": 5,
-    "multipliers": { "Goal": 5, "Project": 3, "Task": 1 },
-    "taskWeights": { "main": 100, "side": 40, "daily": 10, "shadow": "var", "event": "var" }
-  },
-  "tags": {
-    "domains": ["Wealth","Health","Love","Evolution"],
-    "status": ["Active","Paused","Completed"]
-  }
+	"xp": {
+		"base": 5,
+		"multipliers": { "Goal": 5, "Project": 3, "Task": 1 },
+		"taskWeights": {
+			"main": 100,
+			"side": 40,
+			"daily": 10,
+			"shadow": "var",
+			"event": "var"
+		}
+	},
+	"tags": {
+		"domains": ["Wealth", "Health", "Love", "Evolution"],
+		"status": ["Active", "Paused", "Completed"]
+	}
 }

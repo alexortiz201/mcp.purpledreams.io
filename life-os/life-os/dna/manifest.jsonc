@@ -1,281 +1,281 @@
 {
-  "format": "life-os-dna-manifest",
-  "formatVersion": 1,
+	"format": "life-os-dna-manifest",
+	"formatVersion": 1,
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // Meta
-  // ─────────────────────────────────────────────────────────────────────────────
-  "metadata": {
-    "description": "Defines the semantic and gamified ontology for the Life-OS DNA system.",
-    "author": "Alex Ortiz",
-    "license": "MIT",
-    "created": "2025-10-21",
-    "type": "schema-manifest"
-  },
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Meta
+	// ─────────────────────────────────────────────────────────────────────────────
+	"metadata": {
+		"description": "Defines the semantic and gamified ontology for the Life-OS DNA system.",
+		"author": "Alex Ortiz",
+		"license": "MIT",
+		"created": "2025-10-21",
+		"type": "schema-manifest"
+	},
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // Package
-  // ─────────────────────────────────────────────────────────────────────────────
-  "package": { "name": "@alexortiz201/life-os-dna", "version": "0.1.0" },
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Package
+	// ─────────────────────────────────────────────────────────────────────────────
+	"package": { "name": "@alexortiz201/life-os-dna", "version": "0.1.0" },
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // Concepts (Human + AI-readable ontology)
-  // ─────────────────────────────────────────────────────────────────────────────
-  "concepts": {
-    "goals": {
-      "label": "Focus Areas / Life Domains / Goals",
-      "description": "*Why* you do things — long-arc intentions or areas of mastery.",
-      "examples": ["Wealth", "Love", "Health", "Evolution"]
-    },
-    "projects": {
-      "label": "Narratives / Projects / Learning Journeys",
-      "description": "*How* progress unfolds within a Goal. They are thematic or skill-based.",
-      "examples": ["MCP Arc", "Front-End Arc", "The Body Reclamation Arc"]
-    },
-    "tasks": {
-      "label": "Action Units / Commitments / Tasks",
-      "description": "*What* you actually do — actionable, measurable steps that build XP.",
-      "examples": [
-        "Refactor MCP schedule service",
-        "Run 5k",
-        "Date night",
-        "Meditate 10 mins"
-      ],
-      "types": {
-        "main": {
-          "duration": "1-3 months",
-          "description": "Core narrative project — tied to a Goal's long-term transformation."
-        },
-        "side": {
-          "duration": "1-3 weeks",
-          "description": "Supporting project or stretch goal."
-        },
-        "daily": {
-          "duration": "1 day",
-          "description": "Repeated micro-habits or focus actions."
-        },
-        "shadow": {
-          "duration": "undefined",
-          "description": "Challenges, fears, or internal resistances to overcome."
-        },
-        "event": {
-          "duration": "fixed date",
-          "description": "Milestones or time-bound missions."
-        }
-      }
-    }
-  },
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Concepts (Human + AI-readable ontology)
+	// ─────────────────────────────────────────────────────────────────────────────
+	"concepts": {
+		"goals": {
+			"label": "Focus Areas / Life Domains / Goals",
+			"description": "*Why* you do things — long-arc intentions or areas of mastery.",
+			"examples": ["Wealth", "Love", "Health", "Evolution"]
+		},
+		"projects": {
+			"label": "Narratives / Projects / Learning Journeys",
+			"description": "*How* progress unfolds within a Goal. They are thematic or skill-based.",
+			"examples": ["MCP Arc", "Front-End Arc", "The Body Reclamation Arc"]
+		},
+		"tasks": {
+			"label": "Action Units / Commitments / Tasks",
+			"description": "*What* you actually do — actionable, measurable steps that build XP.",
+			"examples": [
+				"Refactor MCP schedule service",
+				"Run 5k",
+				"Date night",
+				"Meditate 10 mins"
+			],
+			"types": {
+				"main": {
+					"duration": "1-3 months",
+					"description": "Core narrative project — tied to a Goal's long-term transformation."
+				},
+				"side": {
+					"duration": "1-3 weeks",
+					"description": "Supporting project or stretch goal."
+				},
+				"daily": {
+					"duration": "1 day",
+					"description": "Repeated micro-habits or focus actions."
+				},
+				"shadow": {
+					"duration": "undefined",
+					"description": "Challenges, fears, or internal resistances to overcome."
+				},
+				"event": {
+					"duration": "fixed date",
+					"description": "Milestones or time-bound missions."
+				}
+			}
+		}
+	},
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // Legend / Iconography (for UI + quick mental parsing)
-  // ─────────────────────────────────────────────────────────────────────────────
-  "legend": {
-    "goals.icon": "🎯",
-    "projects.icon": "🧱",
-    "tasks.icon": "⚔️",
-    "tasks.types.main.icon": "🏆",
-    "tasks.types.side.icon": "🛠️",
-    "tasks.types.daily.icon": "🗓️",
-    "tasks.types.shadow.icon": "🕳️",
-    "tasks.types.event.icon": "✨",
-    "xp.icon": "⚡",
-    "ai.icon": "🤖"
-  },
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Legend / Iconography (for UI + quick mental parsing)
+	// ─────────────────────────────────────────────────────────────────────────────
+	"legend": {
+		"goals.icon": "🎯",
+		"projects.icon": "🧱",
+		"tasks.icon": "⚔️",
+		"tasks.types.main.icon": "🏆",
+		"tasks.types.side.icon": "🛠️",
+		"tasks.types.daily.icon": "🗓️",
+		"tasks.types.shadow.icon": "🕳️",
+		"tasks.types.event.icon": "✨",
+		"xp.icon": "⚡",
+		"ai.icon": "🤖"
+	},
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // Locations (no build logic yet — just conventional folders)
-  // ─────────────────────────────────────────────────────────────────────────────
-  "templates": { "folder": "./templates" },
-  "artifacts": { "folder": "../life-os-expression" },
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Locations (no build logic yet — just conventional folders)
+	// ─────────────────────────────────────────────────────────────────────────────
+	"templates": { "folder": "./templates" },
+	"artifacts": { "folder": "../life-os-expression" },
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // Constraints / System guardrails
-  // ─────────────────────────────────────────────────────────────────────────────
-  "constraints": {
-    "description": "The rules and limits for the game system.",
-    "concepts": {
-      "maxGoals": 4,
-      "maxProjectsPerGoal": 3,
-      "maxTasksPerProject": 5
-    }
-  },
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Constraints / System guardrails
+	// ─────────────────────────────────────────────────────────────────────────────
+	"constraints": {
+		"description": "The rules and limits for the game system.",
+		"concepts": {
+			"maxGoals": 4,
+			"maxProjectsPerGoal": 3,
+			"maxTasksPerProject": 5
+		}
+	},
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // Generalized XP System (extensible)
-  // ─────────────────────────────────────────────────────────────────────────────
-  "xp": {
-    // Optional base used in formulas; can be ignored by simpler scorers
-    "base": 5,
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Generalized XP System (extensible)
+	// ─────────────────────────────────────────────────────────────────────────────
+	"xp": {
+		// Optional base used in formulas; can be ignored by simpler scorers
+		"base": 5,
 
-    // Concept-level multipliers
-    "rules": {
-      "goal": {
-        "multiplier": 5,
-        "description": "Evolving or achieving a major Goal."
-      },
-      "project": {
-        "multiplier": 3,
-        "description": "Completing a Project (Arc) milestone."
-      },
-      "task": { "multiplier": 1, "description": "Finishing a Task (Quest)." }
-    },
+		// Concept-level multipliers
+		"rules": {
+			"goal": {
+				"multiplier": 5,
+				"description": "Evolving or achieving a major Goal."
+			},
+			"project": {
+				"multiplier": 3,
+				"description": "Completing a Project (Arc) milestone."
+			},
+			"task": { "multiplier": 1, "description": "Finishing a Task (Quest)." }
+		},
 
-    // Task-type weights (used by simple scorers; advanced scorers may use per-duration, streaks, etc.)
-    "tasks": {
-      "types": {
-        "main": {
-          "weight": 100,
-          "description": "Major quest milestone (chapter objective)."
-        },
-        "side": { "weight": 40, "description": "Supporting or stretch goal." },
-        "daily": {
-          "weight": 10,
-          "description": "Daily ritual or habit (consistency XP)."
-        },
-        "shadow": {
-          "weight": "var",
-          "description": "Overcoming inner resistance; reflective bonus."
-        },
-        "event": {
-          "weight": "var",
-          "description": "Fixed-date mission or special event."
-        }
-      }
-    },
+		// Task-type weights (used by simple scorers; advanced scorers may use per-duration, streaks, etc.)
+		"tasks": {
+			"types": {
+				"main": {
+					"weight": 100,
+					"description": "Major quest milestone (chapter objective)."
+				},
+				"side": { "weight": 40, "description": "Supporting or stretch goal." },
+				"daily": {
+					"weight": 10,
+					"description": "Daily ritual or habit (consistency XP)."
+				},
+				"shadow": {
+					"weight": "var",
+					"description": "Overcoming inner resistance; reflective bonus."
+				},
+				"event": {
+					"weight": "var",
+					"description": "Fixed-date mission or special event."
+				}
+			}
+		},
 
-    // Optional global caps/decay — future-ready; harmless if unused
-    "caps": {
-      "perDay": 200,
-      "perGoal": 300,
-      "perProject": 150
-    },
-    "decay": {
-      "inactiveAfterDays": 7,
-      "rate": 0.15
-    }
-  },
+		// Optional global caps/decay — future-ready; harmless if unused
+		"caps": {
+			"perDay": 200,
+			"perGoal": 300,
+			"perProject": 150
+		},
+		"decay": {
+			"inactiveAfterDays": 7,
+			"rate": 0.15
+		}
+	},
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // Relationships (explicit graph hints for AI)
-  // ─────────────────────────────────────────────────────────────────────────────
-  "relationships": {
-    "concepts": {
-      "description": "Defines structural relationship.",
-      "goals": { "hasMany": "projects" },
-      "projects": { "belongsTo": "goals", "hasMany": "tasks" },
-      "tasks": { "belongsTo": "projects" }
-    }
-  },
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Relationships (explicit graph hints for AI)
+	// ─────────────────────────────────────────────────────────────────────────────
+	"relationships": {
+		"concepts": {
+			"description": "Defines structural relationship.",
+			"goals": { "hasMany": "projects" },
+			"projects": { "belongsTo": "goals", "hasMany": "tasks" },
+			"tasks": { "belongsTo": "projects" }
+		}
+	},
 
-  // Optional: extra AI graph hints & guidance (used later by MCP/app)
-  "context": {
-    "graph": {
-      "nodes": ["goal", "project", "task"],
-      "edges": [
-        { "from": "goal", "to": "project", "type": "contains" },
-        { "from": "project", "to": "task", "type": "contains" }
-      ]
-    },
-    "ai_guidance": {
-      "description": "Helps AI reason about relationships and provide context-aware coaching.",
-      "examples": {
-        "if_goal_complete": "Suggest advancing to a new Project or rebalancing another Goal.",
-        "if_shadow_task_detected": "Offer reflection prompts & mindset coaching."
-      }
-    }
-  },
+	// Optional: extra AI graph hints & guidance (used later by MCP/app)
+	"context": {
+		"graph": {
+			"nodes": ["goal", "project", "task"],
+			"edges": [
+				{ "from": "goal", "to": "project", "type": "contains" },
+				{ "from": "project", "to": "task", "type": "contains" }
+			]
+		},
+		"ai_guidance": {
+			"description": "Helps AI reason about relationships and provide context-aware coaching.",
+			"examples": {
+				"if_goal_complete": "Suggest advancing to a new Project or rebalancing another Goal.",
+				"if_shadow_task_detected": "Offer reflection prompts & mindset coaching."
+			}
+		}
+	},
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // Phases (progression model + multipliers)
-  // ─────────────────────────────────────────────────────────────────────────────
-  "phases": {
-    "order": [
-      "foundation",
-      "calibration",
-      "momentum",
-      "expansion",
-      "integration",
-      "mastery",
-      "transcendence"
-    ],
-    "foundation": {
-      "label": "🏗️ Foundation",
-      "description": "Establish rhythms, baselines, and personal operating systems. Focus on stability, awareness, and clarity.",
-      "core_question": "What does my ideal day look like?",
-      "xp_multiplier": 1.0
-    },
-    "calibration": {
-      "label": "⚖️ Calibration",
-      "description": "Test and tune systems (habits, tools, routines). Identify friction points and refine your flow.",
-      "core_question": "What works — and what drains me?",
-      "xp_multiplier": 1.1
-    },
-    "momentum": {
-      "label": "🚀 Momentum",
-      "description": "Routines are stabilized. Focus shifts to consistent output and XP generation through daily quests.",
-      "core_question": "How can I sustain this flow longer?",
-      "xp_multiplier": 1.2
-    },
-    "expansion": {
-      "label": "🌌 Expansion",
-      "description": "Introduce new realms or arcs (e.g., robotics, advanced health). Begin scaling your system across domains.",
-      "core_question": "What new frontiers can I explore?",
-      "xp_multiplier": 1.3
-    },
-    "integration": {
-      "label": "🔄 Integration",
-      "description": "Connect learnings across realms and projects. Build synthesis and adaptive self-correction.",
-      "core_question": "How are my realms influencing one another?",
-      "xp_multiplier": 1.5
-    },
-    "mastery": {
-      "label": "🧠 Mastery",
-      "description": "Operate with precision and autonomy. Teach, mentor, and evolve reusable frameworks from your experience.",
-      "core_question": "What wisdom can I now share?",
-      "xp_multiplier": 1.8
-    },
-    "transcendence": {
-      "label": "🔮 Transcendence",
-      "description": "Merge self and system — flow becomes effortless. You live as the architect of your own operating world.",
-      "core_question": "Who am I becoming beyond the system?",
-      "xp_multiplier": 2.0
-    }
-  },
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Phases (progression model + multipliers)
+	// ─────────────────────────────────────────────────────────────────────────────
+	"phases": {
+		"order": [
+			"foundation",
+			"calibration",
+			"momentum",
+			"expansion",
+			"integration",
+			"mastery",
+			"transcendence"
+		],
+		"foundation": {
+			"label": "🏗️ Foundation",
+			"description": "Establish rhythms, baselines, and personal operating systems. Focus on stability, awareness, and clarity.",
+			"core_question": "What does my ideal day look like?",
+			"xp_multiplier": 1.0
+		},
+		"calibration": {
+			"label": "⚖️ Calibration",
+			"description": "Test and tune systems (habits, tools, routines). Identify friction points and refine your flow.",
+			"core_question": "What works — and what drains me?",
+			"xp_multiplier": 1.1
+		},
+		"momentum": {
+			"label": "🚀 Momentum",
+			"description": "Routines are stabilized. Focus shifts to consistent output and XP generation through daily quests.",
+			"core_question": "How can I sustain this flow longer?",
+			"xp_multiplier": 1.2
+		},
+		"expansion": {
+			"label": "🌌 Expansion",
+			"description": "Introduce new realms or arcs (e.g., robotics, advanced health). Begin scaling your system across domains.",
+			"core_question": "What new frontiers can I explore?",
+			"xp_multiplier": 1.3
+		},
+		"integration": {
+			"label": "🔄 Integration",
+			"description": "Connect learnings across realms and projects. Build synthesis and adaptive self-correction.",
+			"core_question": "How are my realms influencing one another?",
+			"xp_multiplier": 1.5
+		},
+		"mastery": {
+			"label": "🧠 Mastery",
+			"description": "Operate with precision and autonomy. Teach, mentor, and evolve reusable frameworks from your experience.",
+			"core_question": "What wisdom can I now share?",
+			"xp_multiplier": 1.8
+		},
+		"transcendence": {
+			"label": "🔮 Transcendence",
+			"description": "Merge self and system — flow becomes effortless. You live as the architect of your own operating world.",
+			"core_question": "Who am I becoming beyond the system?",
+			"xp_multiplier": 2.0
+		}
+	},
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // Layers
-  // ─────────────────────────────────────────────────────────────────────────────
-  "layers": {
-    "core_system": {
-      "purpose": "Active workflows and live dashboards.",
-      "root": "/core-system/",
-      "examples": ["Weekly Dashboard", "Inputs", "Wealth"],
-      "tags": ["layer/Core_System"]
-    },
-    "templates": {
-      "purpose": "Blueprints — structure without live data.",
-      "root": "/templates/",
-      "tags": ["layer/Templates"]
-    },
-    "private": {
-      "purpose": "Local-only logs and sensitive data.",
-      "root": "/private/",
-      "tags": ["layer/Private"]
-    },
-    "expansion": {
-      "purpose": "Intelligence, lore, or XP extensions.",
-      "root": "/expansion/",
-      "tags": ["layer/Expansion"]
-    },
-    "themes": {
-      "purpose": "Visual and narrative overlays.",
-      "root": "/life-os-rna/life-os-themes/",
-      "tags": ["layer/Themes"]
-    },
-    "mcp_server": {
-      "purpose": "External automation and APIs.",
-      "root": "https://purpledreams.io/mcp",
-      "tags": ["layer/MCP"]
-    }
-  }
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Layers
+	// ─────────────────────────────────────────────────────────────────────────────
+	"layers": {
+		"core_system": {
+			"purpose": "Active workflows and live dashboards.",
+			"root": "/core-system/",
+			"examples": ["Weekly Dashboard", "Inputs", "Wealth"],
+			"tags": ["layer/Core_System"]
+		},
+		"templates": {
+			"purpose": "Blueprints — structure without live data.",
+			"root": "/templates/",
+			"tags": ["layer/Templates"]
+		},
+		"private": {
+			"purpose": "Local-only logs and sensitive data.",
+			"root": "/private/",
+			"tags": ["layer/Private"]
+		},
+		"expansion": {
+			"purpose": "Intelligence, lore, or XP extensions.",
+			"root": "/expansion/",
+			"tags": ["layer/Expansion"]
+		},
+		"themes": {
+			"purpose": "Visual and narrative overlays.",
+			"root": "/life-os-rna/life-os-themes/",
+			"tags": ["layer/Themes"]
+		},
+		"mcp_server": {
+			"purpose": "External automation and APIs.",
+			"root": "https://purpledreams.io/mcp",
+			"tags": ["layer/MCP"]
+		}
+	}
 }

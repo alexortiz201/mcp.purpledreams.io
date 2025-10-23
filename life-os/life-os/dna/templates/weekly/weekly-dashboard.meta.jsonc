@@ -1,13 +1,9 @@
-
 {
-  "smart_schedule": {
-    "generator": "generate_schedule",
-    "input_sources": [
-      "/private/logs/weekly/*",
-      "/core-system/wealth/*"
-    ],
-    "output_pattern": "/private/logs/weekly/{{date}} Dashboard.md",
-    "modules": ["Morning", "Deep Work", "Movement", "Lab", "Reflection"],
-    "swappable": true
-  }
+	"smart_schedule": {
+		"generator": "generate_schedule",
+		"input_sources": ["/private/logs/weekly/*", "/core-system/wealth/*"],
+		"output_pattern": "/private/logs/weekly/{{date}} Dashboard.md",
+		"modules": ["Morning", "Deep Work", "Movement", "Lab", "Reflection"],
+		"swappable": true
+	}
 }
