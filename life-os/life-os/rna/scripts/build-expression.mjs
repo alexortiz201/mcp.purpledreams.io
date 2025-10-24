@@ -1,3 +1,4 @@
+/** .mjs required to allow cli usage, @TODO port into ts, and compile down. */
 import { constants } from "node:fs"
 import { access, mkdir, writeFile } from "node:fs/promises"
 import { dirname, resolve } from "node:path"
@@ -5,7 +6,7 @@ import { pathToFileURL } from "node:url"
 
 const root = resolve(process.cwd())
 const distRna = resolve(root, "dist/rna/index.js")
-const distVal = resolve(root, "dist/rna/validation.js") // <-- Zod lives in RNA
+const distVal = resolve(root, "dist/rna/validation.js")
 const outJs = resolve(root, "dist/expression/index.js")
 const outDts = resolve(root, "dist/expression/index.d.ts")
 

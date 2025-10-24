@@ -33,12 +33,12 @@
 			"questions": [
 				{
 					"id": "vision.one_year",
-					"label": "What’s your 1-year vision?",
+					"label": "What's your 1-year vision?",
 					"type": "longtext"
 				},
 				{
 					"id": "vision.ninety_days",
-					"label": "What’s most important in the next 90 days?",
+					"label": "What's most important in the next 90 days?",
 					"type": "longtext"
 				},
 				{
@@ -75,7 +75,7 @@
 					"label": "Which vibe or mood fits you?",
 					"type": "select",
 					"options": [
-						"Architect’s Odyssey",
+						"Architect's Odyssey",
 						"Zen Minimal",
 						"Solarpunk Growth",
 						"Analog Garden"

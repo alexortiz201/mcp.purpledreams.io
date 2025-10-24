@@ -5,8 +5,8 @@
 	"input_sources": [
 		"/private/logs/daily/*",
 		"/private/logs/weekly/*",
-		"/core-system/inputs/Adaptive_Suggestions.md",
-		"/core-system/inputs/Curated_List.md"
+		"/core-system/inputsadaptive_suggestions.md",
+		"/core-system/inputs/curated_list.md"
 	],
 	"signals": {
 		"read_tags": ["#arc/*", "#domain/*", "#status/*"]

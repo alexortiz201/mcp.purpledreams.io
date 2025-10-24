@@ -429,6 +429,7 @@ const renderDataSchema = z
 	.passthrough()
 
 function App(this: Remix.Handle) {
+	console.log({ t: "calculater:index:App" })
 	let renderData: z.infer<typeof renderDataSchema> | null = null
 	void waitForRenderData(renderDataSchema).then((data) => {
 		console.log("renderData", data)
