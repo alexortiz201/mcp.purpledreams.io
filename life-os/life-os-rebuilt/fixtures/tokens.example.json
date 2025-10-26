@@ -1,0 +1,25 @@
+{
+  "persona": {
+    "user": {"name":"Alexander","timezone":"America/New_York"},
+    "ai": {"theme":"neutral","voice":{"tone":"supportive"},
+           "coachProfile":{"motivations":["mastery"],"friction":["fatigue"],
+           "recommendations":["Shorter sessions in the morning"],"lastUpdated":"2025-10-25"}}
+  },
+  "vision": {"one_year":"Operate as the Architect","ninety_days":"Build foundation systems"},
+  "categories": {
+    "health": ["Recovery","Morning Mobility"],
+    "wealth": ["Ship Life‑OS MVP"],
+    "love": ["Weekly Family Dinner"],
+    "evolution": ["Mastery in TypeScript"]
+  },
+  "tasks": {
+    "goalScoped": {
+      "Recovery": {"main":["Gym Routine"], "side":["Stretch Series"]},
+      "Ship Life‑OS MVP": {"main":["Write Compiler"], "side":["Design Schema"]}
+    },
+    "daily": ["Journal","Review Previous Day"]
+  },
+  "nudging": {"dailyPrompts": false, "preferredTimes": ["09:00"]},
+  "theme": {"style":"Neutral"},
+  "references": {"consumedIds": [], "items": []}
+}

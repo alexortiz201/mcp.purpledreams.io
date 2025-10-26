@@ -43,9 +43,9 @@
 				},
 				{
 					"id": "goals.top",
-					"label": "List your top 3 goals.",
+					"label": "List your top 4 goals.",
 					"type": "list",
-					"max": 3
+					"max": 4
 				}
 			]
 		},
@@ -78,7 +78,8 @@
 						"Architect's Odyssey",
 						"Zen Minimal",
 						"Solarpunk Growth",
-						"Analog Garden"
+						"Analog Garden",
+						"Medieval Knight"
 					],
 					"allowCustom": true
 				},

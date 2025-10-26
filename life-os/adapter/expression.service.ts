@@ -2,12 +2,10 @@ import expression from "@life-os/life-os/expression"
 import type { ExpressionBundle } from "@life-os/life-os/types"
 
 function get(obj: Record<string, unknown>, dotted: string) {
-	return (
-		(dotted.split(".").reduce((acc, k) => {
-			if (acc && acc[k] !== undefined) return acc[k]
-			return acc
-		}, obj) as string) || undefined
-	)
+	return (dotted.split(".").reduce((acc, k) => {
+		if (acc && acc[k] !== undefined) acc[k]
+		return acc
+	}, obj) || undefined) as unknown as string
 }
 
 function interpolate(

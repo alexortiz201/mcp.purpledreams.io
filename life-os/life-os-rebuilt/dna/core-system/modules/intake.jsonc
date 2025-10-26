@@ -1,0 +1,62 @@
+{
+  "groups": [
+    {
+      "id": "hello",
+      "title": "Welcome",
+      "questions": [
+        { "id": "name", "type": "text", "prompt": "What should I call you?" },
+        { "id": "timezone", "type": "timezone", "prompt": "What is your time zone?" }
+      ]
+    },
+    {
+      "id": "theme",
+      "title": "Theme & Persona",
+      "questions": [
+        { "id": "theme", "type": "select", "prompt": "Pick a theme or use the neutral default.", "options": ["neutral","architects-odyssey","oracle","rpg-guide"] },
+        { "id": "micro_tone", "type": "multi", "prompt": "Any tone tweaks? (e.g., more playful)", "optional": true }
+      ]
+    },
+    {
+      "id": "vision",
+      "title": "Vision",
+      "questions": [
+        { "id": "one_year", "type": "textarea", "prompt": "What would make the next year a win?" },
+        { "id": "ninety_days", "type": "textarea", "prompt": "What is your 90‑day focus?" }
+      ]
+    },
+    {
+      "id": "categories_goals",
+      "title": "Categories & Goals",
+      "questions": [
+        { "id": "accept_seed", "type": "confirm", "prompt": "Want a suggested Category with seed goal & tasks if you’re unsure?" },
+        { "id": "categories", "type": "tags", "prompt": "List categories you care about (start with health, wealth, love, evolution; add others if you like)." },
+        { "id": "goals_by_category", "type": "object", "prompt": "For each category you listed, add at least one goal.", "schemaHint": "Record<string, string[]>" }
+      ]
+    },
+    {
+      "id": "goal_details",
+      "title": "Goal Details",
+      "questions": [
+        { "id": "metrics", "type": "object", "prompt": "Optional metrics for your goals (name/target/unit)." },
+        { "id": "target_dates", "type": "object", "prompt": "Target dates (optional) for your goals (YYYY‑MM‑DD)." }
+      ]
+    },
+    {
+      "id": "tasks",
+      "title": "Tasks",
+      "questions": [
+        { "id": "goal_scoped_main", "type": "object", "prompt": "Main tasks per goal (Record<goal, string[]>)." },
+        { "id": "goal_scoped_side", "type": "object", "prompt": "Side tasks per goal (Record<goal, string[]>)." },
+        { "id": "daily_tasks", "type": "tags", "prompt": "Daily tasks (journal, review, walk…)" }
+      ]
+    },
+    {
+      "id": "nudging",
+      "title": "Nudging",
+      "questions": [
+        { "id": "enable", "type": "confirm", "prompt": "Enable gentle nudges?" },
+        { "id": "times", "type": "tags", "prompt": "Preferred times (HH:mm)", "optional": true }
+      ]
+    }
+  ]
+}
