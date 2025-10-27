@@ -1,4 +1,4 @@
 # Main Task (Example)
-A high‑leverage task that advances the goal meaningfully.
+A high-leverage task that advances the goal meaningfully.
 
-Keep scope realistic; prefer 60–90 minutes blocks.
+Keep scope realistic; prefer 60-90 minutes blocks.

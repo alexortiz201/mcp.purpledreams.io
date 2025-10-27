@@ -5,7 +5,7 @@ Include:
 - Name, timezone
 - Archetype (if any), preferred tone
 - Top motivations & friction patterns (once detected)
-- Snapshot: top 3 goals, today’s main task
+- Snapshot: top 3 goals, today's main task
 
 Style:
 - Clear headings, short bullets, no filler.

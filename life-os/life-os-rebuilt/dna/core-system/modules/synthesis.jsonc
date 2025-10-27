@@ -1,49 +1,64 @@
 {
-  "rules": [
-    {
-      "id": "category-goals",
-      "materializeFrom": "tokens.categories",
-      "eachKeyAs": "category",
-      "eachValueAs": "goalList",
-      "forEach": {
-        "itemsFrom": "goalList",
-        "itemAs": "goalTitle",
-        "useExample": "goals/goal",
-        "artifactId": "categories/${category}/goals/${slug(goalTitle)}/goal"
-      }
-    },
-    {
-      "id": "goal-scoped-tasks",
-      "materializeFrom": "tokens.tasks.goalScoped",
-      "eachKeyAs": "goalTitle",
-      "eachValueAs": "groups",
-      "forEach": {
-        "eachKeyAs": "group",
-        "eachValueAs": "taskList",
-        "itemsFrom": "taskList",
-        "itemAs": "taskTitle",
-        "useExample": "tasks/${group}",
-        "artifactId": "categories/${findGoalCategory(goalTitle)}/goals/${slug(goalTitle)}/tasks/${group}/${slug(taskTitle)}"
-      }
-    },
-    {
-      "id": "daily-tasks",
-      "materializeFrom": "tokens.tasks.daily",
-      "eachValueAs": "taskTitle",
-      "useExample": "tasks/daily",
-      "artifactId": "tasks/daily/${slug(taskTitle)}"
-    },
-    {
-      "id": "core-artifacts",
-      "single": [
-        { "useExample": "core-system/character-sheet",  "artifactId": "persona/sheet" },
-        { "useExample": "core-system/ai-coach-profile", "artifactId": "persona/ai-coach-profile" },
-        { "useExample": "core-system/journal",          "artifactId": "daily/journal" },
-        { "useExample": "core-system/weekly-dashboard", "artifactId": "weekly/dashboard" },
-        { "useExample": "core-system/learning-archive", "artifactId": "learning/archive" },
-        { "useExample": "core-system/blockers-shadow",  "artifactId": "blockers/shadow" }
-      ]
-    }
-  ],
-  "namespaces": { "categories": ["health","wealth","love","evolution"] }
+	"rules": [
+		{
+			"id": "category-goals",
+			"materializeFrom": "tokens.categories",
+			"eachKeyAs": "category",
+			"eachValueAs": "goalList",
+			"forEach": {
+				"itemsFrom": "goalList",
+				"itemAs": "goalTitle",
+				"useExample": "goals/goal",
+				"artifactId": "categories/${category}/goals/${slug(goalTitle)}/goal"
+			}
+		},
+		{
+			"id": "goal-scoped-tasks",
+			"materializeFrom": "tokens.tasks.goalScoped",
+			"eachKeyAs": "goalTitle",
+			"eachValueAs": "groups",
+			"forEach": {
+				"eachKeyAs": "group",
+				"eachValueAs": "taskList",
+				"itemsFrom": "taskList",
+				"itemAs": "taskTitle",
+				"useExample": "tasks/${group}",
+				"artifactId": "categories/${findGoalCategory(goalTitle)}/goals/${slug(goalTitle)}/tasks/${group}/${slug(taskTitle)}"
+			}
+		},
+		{
+			"id": "daily-tasks",
+			"materializeFrom": "tokens.tasks.daily",
+			"eachValueAs": "taskTitle",
+			"useExample": "tasks/daily",
+			"artifactId": "tasks/daily/${slug(taskTitle)}"
+		},
+		{
+			"id": "core-artifacts",
+			"single": [
+				{
+					"useExample": "core-system/character-sheet",
+					"artifactId": "persona/sheet"
+				},
+				{
+					"useExample": "core-system/ai-coach-profile",
+					"artifactId": "persona/ai-coach-profile"
+				},
+				{ "useExample": "core-system/journal", "artifactId": "daily/journal" },
+				{
+					"useExample": "core-system/weekly-dashboard",
+					"artifactId": "weekly/dashboard"
+				},
+				{
+					"useExample": "core-system/learning-archive",
+					"artifactId": "learning/archive"
+				},
+				{
+					"useExample": "core-system/blockers-shadow",
+					"artifactId": "blockers/shadow"
+				}
+			]
+		}
+	],
+	"namespaces": { "categories": ["health", "wealth", "love", "evolution"] }
 }

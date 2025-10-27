@@ -1,23 +1,31 @@
 import path from "node:path"
-import { ensureDir, readFile, writeFile } from "fs-extra"
-import globby from "globby"
+import { mkdir, readFile, writeFile } from "fs/promises"
+import { globby } from "globby"
 import { parse as parseJSONC } from "jsonc-parser"
 import slugify from "slugify"
 
 const ROOT = process.cwd()
-const LIFE_OS = path.join(ROOT, "life-os-rebuilt")
-const DNA_DIR = path.join(LIFE_OS, "dna")
+const DNA_DIR = path.join(ROOT, "dna")
 const TPL_DIR = path.join(DNA_DIR, "templates")
 const MOD_DIR = path.join(DNA_DIR, "core-system", "modules")
-const OUT_JS = path.join(LIFE_OS, "dist", "expression", "index.js")
-const OUT_DTS = path.join(LIFE_OS, "dist", "expression", "index.d.ts")
-const TOKENS_CLI = process.argv.includes("--tokens")
-	? process.argv[process.argv.indexOf("--tokens") + 1]
-	: null
 
-const readJSONC = async (p) => parseJSONC(await readFile(p, "utf8"))
-const loadTokens = async () =>
-	TOKENS_CLI ? JSON.parse(await readFile(TOKENS_CLI, "utf8")) : {}
+function arg(name, fallback = null) {
+	const i = process.argv.indexOf(name)
+	return i >= 0 ? process.argv[i + 1] : fallback
+}
+
+const TOKENS_PATH = arg("--tokens")
+const OUT_DIR = arg("--outdir", path.join(ROOT, "dist", "expression"))
+const OUT_JS = path.join(OUT_DIR, "index.js")
+const OUT_DTS = path.join(OUT_DIR, "index.d.ts")
+
+async function readJSONC(p) {
+	return parseJSONC(await readFile(p, "utf8"))
+}
+async function loadTokens() {
+	if (!TOKENS_PATH) return {}
+	return JSON.parse(await readFile(TOKENS_PATH, "utf8"))
+}
 
 // id -> example content
 async function loadExamples() {
@@ -46,7 +54,10 @@ function stubFromExample(exampleId, examples, meta) {
 }
 
 async function main() {
-	await readJSONC(path.join(MOD_DIR, "synthesis.jsonc")) // reserved for future logic
+	try {
+		await readJSONC(path.join(MOD_DIR, "synthesis.jsonc"))
+	} catch {}
+
 	const examples = await loadExamples()
 	const tokens = await loadTokens()
 
@@ -137,7 +148,7 @@ async function main() {
 		2
 	)
 
-	await ensureDir(path.dirname(OUT_JS))
+	await mkdir(OUT_DIR, { recursive: true })
 	await writeFile(
 		OUT_JS,
 		`export const expression = ${JSON.stringify(
@@ -168,7 +179,13 @@ declare const expression: ExpressionBundle;
 export default expression;`
 	)
 
-	console.log("[life-os] expression stub bundle generated:", OUT_JS)
+	const byPrefix = {}
+	for (const id of Object.keys(artifacts)) {
+		const prefix = id.split("/")[0]
+		byPrefix[prefix] = (byPrefix[prefix] || 0) + 1
+	}
+	console.log("[life-os] expression stub bundle:", OUT_JS)
+	console.log("[life-os] artifacts:", Object.keys(artifacts).length, byPrefix)
 }
 
 main().catch((e) => {

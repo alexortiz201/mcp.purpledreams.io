@@ -5,7 +5,7 @@ Sections:
 - Wins (specific)
 - Lessons (one liner)
 - Intentions (one thing that matters)
-- Mood / energy (1–5)
+- Mood / energy (1-5)
 - Blockers (short)
 
-Style: concise, encouraging, future‑oriented.
+Style: concise, encouraging, future-oriented.

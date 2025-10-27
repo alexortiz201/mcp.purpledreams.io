@@ -7,4 +7,4 @@ Include:
 - Main tasks per goal
 - Daily rituals to protect
 
-Keep it scannable; 150–250 words.
+Keep it scannable; 150-250 words.
