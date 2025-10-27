@@ -9,7 +9,7 @@
 		"worker",
 		"./types/reset.d.ts",
 		"./types/worker-configuration.d.ts",
-, "life-os/life-os-rebuilt/worker/tools/start_experience_setup.ts"		"life-os/life-os-rebuilt/start_experience_setup.runner.mjs"
+		"life-os/life-os-rebuilt/start_experience_setup.runner.mjs"
 	],
 	"exclude": ["worker/widgets"]
 }
