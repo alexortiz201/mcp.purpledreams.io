@@ -1,3 +1,9 @@
+// worker/tools/start_experience_setup.ts
+// TypeScript ESM-safe runner — supports both import & CLI use.
+// - Does NOT auto-run when imported (fixes wrangler/vite import side-effects)
+// - Resolves LIFE_OS_DIR robustly
+// - Reads JSON from stdin in CLI mode
+
 import { exec } from "node:child_process"
 import fs from "node:fs/promises"
 import path from "node:path"
@@ -28,10 +34,19 @@ async function readStdinJSON<T = any>(): Promise<T | {}> {
 	}
 }
 
-// ────────────────────────────────────────────────────────────────
-// Core logic (can be imported or called directly)
-// ────────────────────────────────────────────────────────────────
+// Try to derive __dirname; fall back to CWD if bundler/loader masks import.meta.url
+function safeDirname(): string {
+	try {
+		// Some loaders give a proper file URL string
+		// @ts-expect-error
+		const href: string | undefined =
+			typeof import.meta !== "undefined" ? (import.meta as any).url : undefined
+		if (href) return path.dirname(fileURLToPath(href))
+	} catch {}
+	return process.cwd()
+}
 
+// ────────────────────────────────────────────────────────────────
 export async function start_experience_setup(
 	payload: any,
 	LIFE_OS_DIR: string
@@ -116,42 +131,40 @@ export async function start_experience_setup(
 }
 
 // ────────────────────────────────────────────────────────────────
-// CLI Entrypoint
+// CLI Entrypoint (guarded)
 // ────────────────────────────────────────────────────────────────
 
-async function main() {
-	console.log("[life-os] start_experience_setup.ts starting…")
-	const __dirname = path.dirname(fileURLToPath(import.meta.url))
-
+async function resolveLifeOsDir(fromDir: string): Promise<string> {
 	const CANDIDATE_ENV = process.env.LIFE_OS_DIR
 	const CANDIDATES = [
 		CANDIDATE_ENV,
-		path.resolve(__dirname, "../../life-os/life-os-rebuilt"),
-		path.resolve(__dirname, "../life-os/life-os-rebuilt"),
-		path.resolve(__dirname, "../../life-os-rebuilt"),
+		path.resolve(fromDir, "../../life-os/life-os-rebuilt"),
+		path.resolve(fromDir, "../life-os/life-os-rebuilt"),
+		path.resolve(fromDir, "../../life-os-rebuilt"),
 		path.resolve(process.cwd(), "life-os/life-os-rebuilt"),
 		path.resolve(process.cwd(), "life-os-rebuilt"),
 		path.resolve(process.cwd()),
 	].filter(Boolean) as string[]
 
-	let LIFE_OS_DIR: string | null = null
 	for (const p of CANDIDATES) {
 		try {
 			const st = await fs.stat(p)
-			if (st.isDirectory()) {
-				LIFE_OS_DIR = p
-				break
-			}
+			if (st.isDirectory()) return p
 		} catch {}
 	}
+	throw new Error(
+		"[life-os] Could not locate life-os-rebuilt.\nChecked:\n" +
+			CANDIDATES.map((p) => ` - ${p}`).join("\n") +
+			"\nTip: set LIFE_OS_DIR=/absolute/path/to/life-os/life-os-rebuilt"
+	)
+}
 
-	if (!LIFE_OS_DIR) {
-		console.error("[life-os] Tried:", CANDIDATES)
-		throw new Error(
-			"Could not locate life-os-rebuilt. Set LIFE_OS_DIR=/absolute/path/to/life-os/life-os-rebuilt"
-		)
-	}
+async function main() {
+	// verbose logs help under loaders
+	console.log("[life-os] start_experience_setup.ts starting...")
 
+	const here = safeDirname()
+	const LIFE_OS_DIR = await resolveLifeOsDir(here)
 	console.log("[life-os] Using LIFE_OS_DIR =", LIFE_OS_DIR)
 
 	const payload = await readStdinJSON<any>()
@@ -161,7 +174,21 @@ async function main() {
 	console.log(JSON.stringify(result, null, 2))
 }
 
-main().catch((err) => {
-	console.error("[life-os] setup failed:", err)
-	process.exit(1)
-})
+// Only run when executed as a CLI (not when imported by the Worker)
+// Some loaders don’t populate process.argv[1]; guard carefully.
+let isCLI = false
+try {
+	const argv1 = process.argv?.[1]
+	if (argv1) {
+		isCLI = pathToFileURL(argv1).href === (import.meta as any).url
+	}
+} catch {
+	// ignore — default is false
+}
+
+if (isCLI) {
+	main().catch((err) => {
+		console.error("[life-os] setup failed:", err)
+		process.exit(1)
+	})
+}
