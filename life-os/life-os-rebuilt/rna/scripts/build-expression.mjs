@@ -50,7 +50,7 @@ function stubFromExample(exampleId, examples, meta) {
 	const header = `<!-- AI: Construct this artifact using DNA example "${exampleId}". Do not copy verbatim; adapt to user tokens and psychology profile. -->
 <!-- META: ${JSON.stringify(meta)} -->
 `
-	return header + "\n" + hint.trim() + "\n"
+	return `${header}\n${hint.trim()}\n`
 }
 
 async function main() {
@@ -77,7 +77,7 @@ async function main() {
 	}
 
 	// goal-scoped tasks
-	const goalScoped = (tokens.tasks && tokens.tasks.goalScoped) || {}
+	const goalScoped = tokens.tasks?.goalScoped || {}
 	for (const [goalTitle, groups] of Object.entries(goalScoped)) {
 		const category = findGoalCategory(tokens, goalTitle)
 		if (!category) continue
@@ -100,7 +100,7 @@ async function main() {
 	}
 
 	// daily tasks
-	for (const taskTitle of (tokens.tasks && tokens.tasks.daily) || []) {
+	for (const taskTitle of tokens.tasks?.daily || []) {
 		const taskSlug = slugify(taskTitle, { lower: true, strict: true })
 		const id = `tasks/daily/${taskSlug}`
 		artifacts[id] = stubFromExample("tasks/daily", examples, {

@@ -47,8 +47,31 @@ function safeDirname(): string {
 }
 
 // ────────────────────────────────────────────────────────────────
+type Payload = Partial<{
+	userId: string
+	persona: {
+		name: string
+		archetype: string
+	}
+	seedCategory: string
+	theme: string
+	goalTitle: string
+	vision: {
+		one_year: string
+		ninety_days: string
+	}
+	tasks: {
+		daily: Array<string>
+		main: Array<string>
+		side: Array<string>
+	}
+	nudging: {
+		dailyPrompts: boolean
+		preferredTimes: Array<string>
+	}
+}>
 export async function start_experience_setup(
-	payload: any,
+	payload: Payload,
 	LIFE_OS_DIR: string
 ) {
 	const userId = String(payload.userId || "default")

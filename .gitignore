@@ -26,5 +26,5 @@ dist-ssr
 *.sw?
 
 # Dependency directories
-./.wrangler/**
-./.env
+.wrangler/**
+.env

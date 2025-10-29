@@ -1,11 +1,50 @@
 import expression from "@life-os/life-os/expression"
-import { start_experience_setup } from "../life-os/life-os-rebuilt/worker/tools/start_experience_setup.ts"
+// import { start_experience_setup } from "../life-os/life-os-rebuilt/worker/tools/start_experience_setup.ts"
 import { type Props, PurpleDreamsMCP } from "./mcp.tsx"
 import { api } from "./routes/router.ts"
 import { getCorsHeaders, withCors } from "./utils/utils-requests.ts"
 import { getResourceRenderToString } from "./widgets/utils/utils-mcp-ui.tsx"
 
 export { PurpleDreamsMCP }
+
+async function handleLifeOSAPI(
+	request: Request,
+	env: Env,
+	ctx: ExecutionContext<Props>
+) {
+	const url = new URL(request.url)
+	const { pathname } = url
+
+	// 🧩 Unified Life-OS API router
+	if (pathname.startsWith("/api")) return await api.fetch(request, env, ctx)
+
+	if (url.pathname === "/life-os/expression") {
+		return new Response(JSON.stringify(expression), {
+			headers: { "content-type": "application/json" },
+		})
+	}
+	if (url.pathname === "/life-os/artifact") {
+		const id = url.searchParams.get("id") || "weekly/dashboard"
+		const content = expression.artifacts[id]
+		return new Response(content ?? "", {
+			headers: { "content-type": "text/plain" },
+		})
+	}
+
+	/* if (url.pathname === "/tools/start_experience_setup") {
+		const payload = { userId: "alex" } // await req.json().catch(() => ({}))
+		const result = await start_experience_setup(
+			payload,
+			"../life-os/life-os-rebuilt"
+		)
+		console.log({ result: JSON.stringify(result, null, 2) })
+		return new Response(JSON.stringify(result, null, 2), {
+			headers: { "content-type": "application/json" },
+		})
+	} */
+
+	return new Response("Not Found", { status: 404 })
+}
 
 export default {
 	fetch: withCors({
@@ -20,29 +59,8 @@ export default {
 
 			if (pathname === "/health") return new Response("ok")
 
-			// 🧩 Unified Life-OS API router
-			if (pathname.startsWith("/api")) return await api.fetch(request, env, ctx)
-			if (url.pathname === "/life-os/expression") {
-				return new Response(JSON.stringify(expression), {
-					headers: { "content-type": "application/json" },
-				})
-			}
-			if (url.pathname === "/life-os/artifact") {
-				const id = url.searchParams.get("id") || "weekly/dashboard"
-				const content = expression.artifacts[id]
-				return new Response(content ?? "", {
-					headers: { "content-type": "text/plain" },
-				})
-			}
-			if (url.pathname === "/tools/start_experience_setup") {
-				const payload = {} // await req.json().catch(() => ({}))
-				const result = await start_experience_setup(
-					payload,
-					"../life-os/life-os-rebuilt"
-				)
-				return new Response(JSON.stringify(result, null, 2), {
-					headers: { "content-type": "application/json" },
-				})
+			if (pathname.startsWith("/api") || pathname.startsWith("/life-os")) {
+				return await handleLifeOSAPI(request, env, ctx)
 			}
 
 			// 🧠 MCP server

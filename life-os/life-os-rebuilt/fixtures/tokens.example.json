@@ -18,14 +18,14 @@
 	},
 	"categories": {
 		"health": ["Recovery", "Morning Mobility"],
-		"wealth": ["Ship Life‑OS MVP"],
+		"wealth": ["Ship Life-OS MVP"],
 		"love": ["Weekly Family Dinner"],
 		"evolution": ["Mastery in TypeScript"]
 	},
 	"tasks": {
 		"goalScoped": {
 			"Recovery": { "main": ["Gym Routine"], "side": ["Stretch Series"] },
-			"Ship Life‑OS MVP": {
+			"Ship Life-OS MVP": {
 				"main": ["Write Compiler"],
 				"side": ["Design Schema"]
 			}
