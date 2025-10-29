@@ -3,14 +3,11 @@ import { ScheduleSchema } from "../../life-os/models/lifeos"
 import { ScheduleService } from "../../life-os/services/schedule"
 import { D1Store } from "../../life-os/store/adapters/d1-store"
 import { ENV_KEY } from "./middleware/inject-context.ts"
-import type { routes } from "./routes.ts"
+import type { routesAPI } from "./routes.ts"
 
 export default {
 	// use: [addContextToStorage], // Example middleware
 	handlers: {
-		async hello() {
-			return new Response("Hello from Schedule route!")
-		},
 		async index({ request, storage }) {
 			const env = storage.get(ENV_KEY)
 			const week = new URL(request.url).searchParams.get("week") ?? "2025-W43"
@@ -39,5 +36,5 @@ export default {
 				headers: { "content-type": "application/json" },
 			})
 		},
-	} satisfies RouteHandlers<typeof routes.schedule>,
+	} satisfies RouteHandlers<typeof routesAPI.schedule>,
 }
