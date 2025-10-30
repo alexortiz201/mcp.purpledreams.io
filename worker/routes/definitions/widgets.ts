@@ -1,10 +1,13 @@
 import type { RouteHandlers } from "@remix-run/fetch-router"
+import {
+	// getCorsHeaders,
+	// withCors,
+	withCorsMiddleware,
+} from "../../utils/utils-requests.ts"
 import { getResourceRenderToString } from "../../widgets/utils/utils-mcp-ui.tsx"
 // import { D1Store } from "../../life-os/store/adapters/d1-store"
 // import { ENV_KEY } from "./middleware/inject-context.ts"
 import type { baseAPI } from "../routes.ts"
-
-// import { getCorsHeaders, withCors } from "./utils/utils-requests.ts"
 // CORS middleware for all API routes
 // router.map(routes.api, [cors({ origin: "*" })], handlers)
 
@@ -12,7 +15,7 @@ export default {
 	// currently, convention for remix/fetch-router is { user: [], handlers } || { handler }
 	// not having a use exposed when exposing plural handlers causes a broken code path when
 	// assesing isRouteHandlersWithMiddleware()
-	use: [],
+	use: [withCorsMiddleware],
 	handlers: {
 		async index({ url }) {
 			const htmlString = await getResourceRenderToString({

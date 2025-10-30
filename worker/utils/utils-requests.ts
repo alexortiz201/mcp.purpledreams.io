@@ -1,3 +1,5 @@
+import type { Middleware } from "@remix-run/fetch-router"
+import Headers from "@remix-run/headers"
 import type { Props } from "../mcp"
 
 const CORS_HEADERS = {
@@ -5,53 +7,54 @@ const CORS_HEADERS = {
 	"Access-Control-Allow-Methods": "GET, POST, OPTIONS",
 	"Access-Control-Allow-Headers": "content-type", // Authorization
 }
+const getCorsHeaders = () => new Headers(CORS_HEADERS)
 
-export const getCorsHeaders = () => ({ ...CORS_HEADERS })
+// export const getCorsHeaders = () => ({ ...CORS_HEADERS })
 
-export function withCors<Props>({
-	getCorsHeaders,
-	handler,
-}: {
-	getCorsHeaders(
-		request: Request
-	): Record<string, string> | Headers | null | undefined
-	handler: CustomExportedHandler<Props>["fetch"]
-}): CustomExportedHandler<Props>["fetch"] {
-	return async (request, env, ctx) => {
-		const corsHeaders = getCorsHeaders(request)
-		if (!corsHeaders) {
-			return handler(request, env, ctx)
-		}
+// export function withCors<Props>({
+// 	getCorsHeaders,
+// 	handler,
+// }: {
+// 	getCorsHeaders(
+// 		request: Request
+// 	): Record<string, string> | Headers | null | undefined
+// 	handler: CustomExportedHandler<Props>["fetch"]
+// }): CustomExportedHandler<Props>["fetch"] {
+// 	return async (request, env, ctx) => {
+// 		const corsHeaders = getCorsHeaders(request)
+// 		if (!corsHeaders) {
+// 			return handler(request, env, ctx)
+// 		}
 
-		// Handle CORS preflight requests
-		if (request.method === "OPTIONS") {
-			const headers = mergeHeaders(corsHeaders, {
-				"Access-Control-Max-Age": "86400",
-			})
+// 		// Handle CORS preflight requests
+// 		if (request.method === "OPTIONS") {
+// 			const headers = mergeHeaders(corsHeaders, {
+// 				"Access-Control-Max-Age": "86400",
+// 			})
 
-			return new Response(null, { status: 204, headers })
-		}
+// 			return new Response(null, { status: 204, headers })
+// 		}
 
-		// Call the original handler
-		const response = await handler(request, env, ctx)
+// 		// Call the original handler
+// 		const response = await handler(request, env, ctx)
 
-		// Add CORS headers to ALL responses, including early returns
-		const newHeaders = mergeHeaders(response.headers, corsHeaders)
+// 		// Add CORS headers to ALL responses, including early returns
+// 		const newHeaders = mergeHeaders(response.headers, corsHeaders)
 
-		if (request.url.includes("widgets/calculator.js")) {
-			console.log(request.url, response.body)
-			console.log("corsHeaders", corsHeaders)
-			console.log("response.headers", response.headers)
-			console.log("mergedHeaders", newHeaders)
-		}
+// 		if (request.url.includes("widgets/calculator.js")) {
+// 			console.log(request.url, response.body)
+// 			console.log("corsHeaders", corsHeaders)
+// 			console.log("response.headers", response.headers)
+// 			console.log("mergedHeaders", newHeaders)
+// 		}
 
-		return new Response(response.body, {
-			status: response.status,
-			statusText: response.statusText,
-			headers: newHeaders,
-		})
-	}
-}
+// 		return new Response(response.body, {
+// 			status: response.status,
+// 			statusText: response.statusText,
+// 			headers: newHeaders,
+// 		})
+// 	}
+// }
 
 /**
  * Merge multiple headers objects into one (uses set so headers are overridden)
@@ -86,3 +89,44 @@ export function takeRequestMeta(req: Request): RequestMeta | undefined {
 	if (meta) requestMeta.delete(req)
 	return meta
 }
+
+export const withCorsMiddleware: Middleware = async (context, next) => {
+	const corsHeaders = getCorsHeaders()
+	if (!corsHeaders) return next(context)
+
+	const { request, url } = context //  storage,
+	// const { origin } = new URL(url)
+	// const env = storage.get(ENV_KEY)
+	// const ctx = storage.get(CTX_KEY)
+
+	// Handle CORS preflight requests
+	if (request.method === "OPTIONS") {
+		const headers = mergeHeaders(corsHeaders, {
+			"Access-Control-Max-Age": "86400",
+		})
+
+		return new Response(null, { status: 204, headers })
+	}
+
+	// Call the original handler
+	const response = await next(context)
+
+	// Add CORS headers to ALL responses, including early returns
+	const newHeaders = mergeHeaders(response.headers, corsHeaders)
+
+	// widgets/calculator.js
+	if (request.url.includes("__dev/widgets")) {
+		console.log(url, response.body)
+		console.log("corsHeaders", corsHeaders)
+		console.log("response.headers", response.headers)
+		console.log("mergedHeaders", newHeaders)
+	}
+
+	return new Response(response.body, {
+		status: response.status,
+		statusText: response.statusText,
+		headers: newHeaders,
+	})
+}
+
+// export const withCorsMiddleware: Middleware = createWithCors({ getCorsHeaders })
