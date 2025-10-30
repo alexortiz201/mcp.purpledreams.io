@@ -1,11 +1,11 @@
 import type { RouteHandlers } from "@remix-run/fetch-router"
-import { PurpleDreamsMCP } from "../index.tsx"
+import { PurpleDreamsMCP } from "../../index.tsx"
 // import { D1Store } from "../../life-os/store/adapters/d1-store"
-import { CTX_KEY, ENV_KEY } from "./middleware/inject-context.ts"
-import type { baseAPI } from "./routes.ts"
+import { CTX_KEY, ENV_KEY } from "../middleware/inject-context.ts"
+import type { baseAPI } from "../routes.ts"
 
 export default {
-	// use: [addContextToStorage], // Example middleware
+	use: [], // [withConext] Example middleware
 	handlers: {
 		async index({ request, storage }) {
 			const { origin } = new URL(request.url)

@@ -1,12 +1,12 @@
 import type { RouteHandlers } from "@remix-run/fetch-router"
-import { ScheduleSchema } from "../../life-os/models/lifeos"
-import { ScheduleService } from "../../life-os/services/schedule"
-import { D1Store } from "../../life-os/store/adapters/d1-store"
-import { ENV_KEY } from "./middleware/inject-context.ts"
-import type { routesAPI } from "./routes.ts"
+import { ScheduleSchema } from "../../../life-os/models/lifeos"
+import { ScheduleService } from "../../../life-os/services/schedule"
+import { D1Store } from "../../../life-os/store/adapters/d1-store"
+import { ENV_KEY } from "../middleware/inject-context.ts"
+import type { routesAPI } from "../routes.ts"
 
 export default {
-	// use: [addContextToStorage], // Example middleware
+	use: [], // Example middleware
 	handlers: {
 		async index({ request, storage }) {
 			const env = storage.get(ENV_KEY)

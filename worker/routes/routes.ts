@@ -1,16 +1,16 @@
 import { route } from "@remix-run/fetch-router"
 import lifeOs from "./definitions/life-os.ts"
-import mcp from "./mcp.ts"
-import schedule from "./schedule.ts"
-import system from "./system.ts"
-import widgets from "./widgets.ts"
+import mcp from "./definitions/mcp.ts"
+import schedule from "./definitions/schedule.ts"
+import system from "./definitions/system.ts"
+import widgets from "./definitions/widgets.ts"
 
 export const handlers = {
-	system: system.handlers,
-	widgets: widgets.handlers,
-	schedule: schedule.handlers,
-	"life-os": lifeOs.handlers,
-	mcp: mcp.handlers,
+	system,
+	widgets,
+	mcp,
+	schedule,
+	"life-os": lifeOs,
 }
 
 export const baseAPI = route("/", {
@@ -49,6 +49,6 @@ export const lifeOSAPI = route("/life-os", {
 
 export const routes = {
 	...baseAPI,
-	...routesAPI,
-	...lifeOSAPI,
+	// ...routesAPI,
+	// ...lifeOSAPI,
 }

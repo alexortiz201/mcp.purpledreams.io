@@ -5,8 +5,6 @@ import { setRequestMeta } from "../utils/utils-requests.ts"
 import { injectContext } from "./middleware/inject-context.ts"
 import { handlers, routes } from "./routes.ts"
 
-// import { getCorsHeaders, withCors } from "./utils/utils-requests.ts"
-
 const router = createRouter()
 
 router.use(injectContext)
@@ -27,8 +25,6 @@ export async function handler(
 	}
 
 	setRequestMeta(request, { env, ctx, locals: { userId: "me" } })
-
-	// if (/mcp) // withCors() can we apply this at the route level?
 
 	return router.fetch(request)
 }

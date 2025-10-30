@@ -5,7 +5,7 @@ import type { RouteHandlers } from "@remix-run/fetch-router"
 import type { lifeOSAPI } from "../routes.ts"
 
 export default {
-	// use: [addContextToStorage], // Example middleware
+	use: [], // Example middleware
 	handlers: {
 		async health() {
 			return new Response("Life-OS online ✅", { status: 200 })
