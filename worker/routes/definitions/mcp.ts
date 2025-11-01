@@ -1,5 +1,5 @@
 import type { RouteHandlers } from "@remix-run/fetch-router"
-import type { SSEEdgeClientTransport } from "agents/mcp"
+// import type { SSEEdgeClientTransport } from "agents/mcp"
 import { PurpleDreamsMCP } from "../../index.tsx"
 // import { D1Store } from "../../life-os/store/adapters/d1-store"
 import { CTX_KEY, ENV_KEY } from "../middleware/inject-context.ts"
