@@ -18,7 +18,7 @@ const getDreamsMCP = () => {
 }
 
 export default {
-	use: [], // [withConext] Example middleware
+	use: [], // [withContext] Example middleware
 	handlers: {
 		async index({ request, storage }) {
 			const { origin } = new URL(request.url)

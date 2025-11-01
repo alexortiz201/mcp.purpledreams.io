@@ -127,3 +127,144 @@ export const withCorsMiddleware: Middleware = async (context, next) => {
 		headers: newHeaders,
 	})
 }
+
+// utils to debug mcp inspector
+function jsonResponse(
+	body: unknown,
+	extraHeaders: Record<string, string> = {}
+) {
+	return new Response(JSON.stringify(body), {
+		status: 200,
+		headers: { "Content-Type": "application/json", ...extraHeaders },
+	})
+}
+
+function jsonrpcError(status: number, code: number, message: string) {
+	return new Response(
+		JSON.stringify({ jsonrpc: "2.0", id: null, error: { code, message } }),
+		{
+			status,
+			headers: { "Content-Type": "application/json" },
+		}
+	)
+}
+
+// Working fetch stup to isolate error flows in fetch endpoints,
+// the transport erroring is difficult to trace.
+// This is stand alone and connects to inspectors when you call it from:
+// /worker/index.ts
+// e.g.
+// 	 export default handler -> export default { fetch: helperFetch }
+export async function helperFetch(request: Request) {
+	const url = new URL(request.url)
+
+	if (url.pathname === "/mcp" && request.method === "POST") {
+		// Enforce Accept header for Streamable HTTP POST
+		const accept = request.headers.get("accept") || ""
+		if (
+			!accept.includes("application/json") ||
+			!accept.includes("text/event-stream")
+		) {
+			return jsonrpcError(
+				406,
+				-32000,
+				"Not Acceptable: Client must accept both application/json and text/event-stream"
+			)
+		}
+
+		let msg: any
+		try {
+			// READ THE BODY ONCE — do NOT call formData() or text() elsewhere
+			// If you had a middleware that already read the body, this will throw / return empty.
+			msg = await request.json() // or: JSON.parse(await request.text())
+		} catch {
+			return jsonrpcError(400, -32700, "Parse error: Invalid JSON")
+		}
+
+		if (msg?.jsonrpc !== "2.0" || typeof msg?.method !== "string") {
+			return jsonrpcError(400, -32700, "Parse error: Invalid JSON")
+		}
+
+		if (msg.method === "initialize") {
+			const sessionId = crypto.randomUUID()
+			const result = {
+				protocolVersion: "2025-03-26",
+				capabilities: {},
+				session: { id: sessionId },
+			}
+			return jsonResponse(
+				{ jsonrpc: "2.0", id: msg.id ?? null, result },
+				{ "Mcp-Session-Id": sessionId }
+			)
+		}
+
+		if (msg.method === "tools/call") {
+			return jsonResponse({
+				jsonrpc: "2.0",
+				id: msg.id ?? null,
+				result: {
+					content: [{ type: "text", text: "hello from CF Worker MCP" }],
+				},
+			})
+		}
+
+		// Unknown method
+		return jsonrpcError(404, -32601, "Method not found")
+	}
+
+	if (url.pathname === "/mcp" && request.method === "GET") {
+		// SSE stream on the SAME URL
+		const accept = request.headers.get("accept") || ""
+		if (!accept.includes("text/event-stream")) {
+			// GET should only require text/event-stream; don't demand application/json here
+			return new Response("Expected text/event-stream", { status: 406 })
+		}
+
+		const stream = new ReadableStream({
+			start(controller) {
+				const send = (obj: unknown) => {
+					controller.enqueue(
+						new TextEncoder().encode(`data: ${JSON.stringify(obj)}\n\n`)
+					)
+				}
+
+				// Optional welcome message
+				send({
+					jsonrpc: "2.0",
+					method: "notifications/welcome",
+					params: { text: "SSE up from Worker" },
+				})
+
+				// Keep alive pings (optional)
+				const ping = setInterval(
+					() =>
+						controller.enqueue(new TextEncoder().encode(": keep-alive\n\n")),
+					25_000
+				)
+
+				// Close handling
+				const cancel = () => clearInterval(ping)
+				// No explicit close signal from CF; stream ends when client disconnects.
+				// You can add cleanup logic if you track sessions.
+
+				// Save cancel on controller so we can call it on `cancel()` if needed
+				;(controller as any)._cancel = cancel
+			},
+			cancel() {
+				const cancel = (this as any)?._cancel
+				if (cancel) cancel()
+			},
+		})
+
+		return new Response(stream, {
+			status: 200,
+			headers: {
+				"Content-Type": "text/event-stream",
+				"Cache-Control": "no-cache",
+				Connection: "keep-alive",
+			},
+		})
+	}
+
+	return new Response("Not found", { status: 404 })
+}

@@ -1,7 +1,7 @@
 import { createRouter } from "@remix-run/fetch-router"
 import { logger } from "@remix-run/fetch-router/logger-middleware"
 import type { Props } from "../mcp.tsx"
-import { setRequestMeta } from "../utils/utils-requests.ts"
+import { helperFetch, setRequestMeta } from "../utils/utils-requests.ts"
 import { injectContext } from "./middleware/inject-context.ts"
 import { handlers, routes } from "./routes.ts"
 
@@ -20,10 +20,11 @@ export default {
 		ctx: ExecutionContext<Props>
 	) {
 		// 📦 Static assets
-		if (env.ASSETS) {
-			const resp = await env.ASSETS.fetch(request)
-			if (resp.ok) return resp
-		}
+		// causing 400 on post
+		// if (env.ASSETS) {
+		// 	const resp = await env.ASSETS.fetch(request)
+		// 	if (resp.ok) return resp
+		// }
 
 		setRequestMeta(request, { env, ctx, locals: { userId: "me" } })
 
