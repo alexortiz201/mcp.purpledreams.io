@@ -26,6 +26,7 @@ export const baseAPI = route("/", {
 	// 🧠 MCP server
 	mcp: {
 		index: { method: "GET", pattern: "/mcp" },
+		action: { method: "POST", pattern: "/mcp" },
 	},
 	// handle splat: 404
 	// new Response("Not Found", { status: 404 })

@@ -1,9 +1,5 @@
 import type { RouteHandlers } from "@remix-run/fetch-router"
-import {
-	// getCorsHeaders,
-	// withCors,
-	withCorsMiddleware,
-} from "../../utils/utils-requests.ts"
+import { withCorsMiddleware } from "../../utils/utils-requests.ts"
 import { getResourceRenderToString } from "../../widgets/utils/utils-mcp-ui.tsx"
 // import { D1Store } from "../../life-os/store/adapters/d1-store"
 // import { ENV_KEY } from "./middleware/inject-context.ts"

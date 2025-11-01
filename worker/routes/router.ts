@@ -13,18 +13,20 @@ if (process.env.NODE_ENV === "development") router.use(logger())
 
 router.map(routes, handlers)
 
-export async function handler(
-	request: Request,
-	env: Env,
-	ctx: ExecutionContext<Props>
-) {
-	// 📦 Static assets
-	if (env.ASSETS) {
-		const resp = await env.ASSETS.fetch(request)
-		if (resp.ok) return resp
-	}
+export default {
+	fetch: async function handler(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext<Props>
+	) {
+		// 📦 Static assets
+		if (env.ASSETS) {
+			const resp = await env.ASSETS.fetch(request)
+			if (resp.ok) return resp
+		}
 
-	setRequestMeta(request, { env, ctx, locals: { userId: "me" } })
+		setRequestMeta(request, { env, ctx, locals: { userId: "me" } })
 
-	return router.fetch(request)
+		return router.fetch(request)
+	},
 }
