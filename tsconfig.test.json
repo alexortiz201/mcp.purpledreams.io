@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"module": "ESNext",
+		"target": "ES2022",
+		"moduleResolution": "Bundler",
+		"types": [
+			"vitest",
+			"@cloudflare/workers-types",
+			"@cloudflare/vitest-pool-worker"
+		],
+		"lib": ["ES2022", "DOM"],
+		"skipLibCheck": true
+	},
+	"include": ["tests/**/*.ts", "tests/**/*.d.ts"]
+}
