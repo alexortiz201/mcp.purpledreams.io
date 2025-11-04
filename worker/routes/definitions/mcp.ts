@@ -21,6 +21,8 @@ export default {
 	use: [], // [withContext] Example middleware
 	handlers: {
 		async index({ request, storage }) {
+			console.error("HERE 1 - !!!!!!!!!!!!!!")
+			console.error(request)
 			const { origin } = new URL(request.url)
 			const env = storage.get(ENV_KEY)
 			const ctx = storage.get(CTX_KEY)
@@ -29,6 +31,8 @@ export default {
 			return getDreamsMCP().fetch(request, env, ctx)
 		},
 		async action({ request, storage }) {
+			console.error("HERE 2 - !!!!!!!!!!!!!!")
+			console.error(request)
 			const { origin } = new URL(request.url)
 			const env = storage.get(ENV_KEY)
 			const ctx = storage.get(CTX_KEY)

@@ -16,7 +16,7 @@ export type WidgetOutput<
 	}>
 }
 
-export type Widget<Input extends ZodRawShape, Output extends ZodRawShape> = {
+export type Widget<I extends ZodRawShape, O extends ZodRawShape> = {
 	name: string
 	title: string
 	resultMessage: string
@@ -26,7 +26,14 @@ export type Widget<Input extends ZodRawShape, Output extends ZodRawShape> = {
 	widgetAccessible?: boolean
 	widgetPrefersBorder?: boolean
 	resultCanProduceWidget?: boolean
-	getHtml: (baseUrl: string) => Promise<string>
-} & WidgetOutput<Input, Output>
+
+	getHtml: (baseUrl: string) => Promise<string> | string
+} & WidgetOutput<I, O>
+
+export function createWidget<I extends ZodRawShape, O extends ZodRawShape>(
+	widget: Widget<I, O>
+): Widget<I, O> {
+	return widget
+}
 
 export const getWidgetConfigs = () => [calculaterWidgetConfig]

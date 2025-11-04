@@ -3,9 +3,9 @@ import { z } from "zod"
 // --- Tokens (extensible) ---
 export const ThemeTokensZ = z
 	.object({
-		color: z.record(z.string()).optional(),
+		color: z.record(z.string(), z.any()).optional(),
 		radius: z.number().nonnegative().optional(),
-		spacing: z.record(z.number()).optional(),
+		spacing: z.record(z.number(), z.any()).optional(),
 		typography: z
 			.object({
 				fontFamily: z.string().optional(),
@@ -15,7 +15,7 @@ export const ThemeTokensZ = z
 			.partial()
 			.optional(),
 	})
-	.passthrough()
+	.loose()
 
 // --- Manifest ---
 export const ThemeManifestZ = z
@@ -28,8 +28,8 @@ export const ThemeManifestZ = z
 		targets: z.array(z.enum(["weekly", "daily", "project", "task", "system"])),
 		priority: z.number().optional(),
 		tokens: ThemeTokensZ.optional(),
-		templates: z.record(z.string()).optional(), // { "weekly.dashboard": "..." }
-		assets: z.record(z.string()).optional(),
+		templates: z.record(z.string(), z.any()).optional(), // { "weekly.dashboard": "..." }
+		assets: z.record(z.string(), z.any()).optional(),
 	})
 	.strict()
 

@@ -19,6 +19,8 @@
 		"preview": "vite preview",
 		"generate-types": "wrangler types ./types/worker-configuration.d.ts",
 		"pretypecheck": "npm run generate-types",
+		"pretest": "vite build -c vite.config.worker.bundle.ts",
+		"test": "DEBUG=vitest-pool-workers,wrangler:* VITEST_TS_NODE_PROJECT=tsconfig.test.json vitest run -c vite.config.workers.ts",
 		"typecheck": "tsc --noEmit",
 		"inspect": "inspector",
 		"validate": "concurrently --kill-others-on-fail -n lint-format-fix,build,typecheck -c green,yellow,blue,magenta \"npm run lint-format-fix\" \"npm run build\" \"npm run typecheck\""
@@ -38,15 +40,30 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.2.6",
 		"@cloudflare/vite-plugin": "^1.13.12",
+		"@cloudflare/vitest-pool-workers": "^0.10.3",
+		"@cloudflare/workers-types": "^4.20251014.0",
 		"@epic-web/config": "^1.21.3",
 		"@mcpjam/inspector": "^1.0.4",
 		"@modelcontextprotocol/inspector": "^0.17.0",
 		"@types/node": "^24.7.2",
 		"@vitejs/plugin-react": "^5.0.4",
+		"@vitest/runner": "^3.2.4",
+		"@vitest/utils": "^3.2.4",
+		"cloudflare-test-utils": "^1.0.2",
 		"concurrently": "^9.2.1",
 		"globals": "^16.4.0",
+		"miniflare": "^4.20251011.1",
 		"typescript": "^5.9.3",
 		"vite": "npm:rolldown-vite@^7.1.17",
+		"vite-node": "^3.2.4",
+		"vitest": "^3.2.4",
 		"wrangler": "^4.45.3"
+	},
+	"overrides": {
+		"zod": "^4.0.16",
+		"vitest": "^3.2.4",
+		"@vitest/utils": "^3.2.4",
+		"@vitest/runner": "^3.2.4",
+		"vite-node": "^3.2.4"
 	}
 }

@@ -1,20 +1,13 @@
 import { type CreateUIResourceOptions, createUIResource } from "@mcp-ui/server"
-import type { ZodRawShape } from "zod"
 import { BUILD_TIMESTAMP } from "./build-timestamp.ts"
 import type { PurpleDreamsMCP } from "./mcp.tsx"
-import { getWidgetConfigs, type Widget } from "./widgets/index"
+import { createWidget, getWidgetConfigs } from "./widgets/index"
 
 const version = BUILD_TIMESTAMP
 
-function createWidget<Input extends ZodRawShape, Output extends ZodRawShape>(
-	widget: Widget<Input, Output>
-): Widget<Input, Output> {
-	return widget
-}
-
 export async function registerWidgets(agent: PurpleDreamsMCP) {
 	const baseUrl = agent.requireDomain()
-	const widgets = getWidgetConfigs().map(createWidget)
+	const widgets = getWidgetConfigs().map((cfg) => createWidget(cfg))
 
 	for (const widget of widgets) {
 		const name = `${widget.name}-${version}`

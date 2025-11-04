@@ -1,7 +1,7 @@
 import { createRouter } from "@remix-run/fetch-router"
 import { logger } from "@remix-run/fetch-router/logger-middleware"
 import type { Props } from "../mcp.tsx"
-import { helperFetch, setRequestMeta } from "../utils/utils-requests.ts"
+import { setRequestMeta } from "../utils/utils-requests.ts"
 import { injectContext } from "./middleware/inject-context.ts"
 import { handlers, routes } from "./routes.ts"
 

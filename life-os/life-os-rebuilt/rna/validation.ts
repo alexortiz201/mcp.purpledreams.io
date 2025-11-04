@@ -1,4 +1,3 @@
-// life-os/rna/validation.ts
 import { z } from "zod"
 
 export const CategoryId = z.string().min(1)

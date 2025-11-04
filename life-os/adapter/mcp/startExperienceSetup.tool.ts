@@ -4,7 +4,7 @@ import { answersToTokens, INTAKE } from "../intake.module"
 
 export const StartExperienceInput = z
 	.object({
-		answers: z.record(z.any()).optional(),
+		answers: z.record(z.any(), z.any()).optional(),
 		targets: z.array(z.string()).optional(),
 	})
 	.optional()

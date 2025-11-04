@@ -26,7 +26,7 @@ const entries = Object.fromEntries(
 		return []
 	})
 )
-
+// testEnvironment: "miniflare"
 // https://vite.dev/config/
 export default defineConfig({
 	// for rolldown remix build support you need to set jsxImportSource to @remix-run/dom

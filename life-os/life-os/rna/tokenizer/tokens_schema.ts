@@ -1,4 +1,3 @@
-// zod schema to validate token payloads before template rendering
 import { z } from "zod"
 
 export const PhaseKey = z.enum([
