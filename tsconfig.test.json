@@ -2,14 +2,19 @@
 	"compilerOptions": {
 		"module": "ESNext",
 		"target": "ES2022",
-		"moduleResolution": "Bundler",
+		"moduleResolution": "bundler",
 		"types": [
 			"vitest",
 			"@cloudflare/workers-types",
-			"@cloudflare/vitest-pool-worker"
+			"@cloudflare/vitest-pool-workers"
 		],
 		"lib": ["ES2022", "DOM"],
 		"skipLibCheck": true
 	},
-	"include": ["tests/**/*.ts", "tests/**/*.d.ts"]
+	"include": [
+		"tests/**/*.ts",
+		"tests/**/*.d.ts",
+		"./types/reset.d.ts",
+		"./types/worker-configuration.d.ts"
+	]
 }

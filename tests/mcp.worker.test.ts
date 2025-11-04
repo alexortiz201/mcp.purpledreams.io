@@ -40,7 +40,7 @@ describe("MCP Streamable HTTP", () => {
 			}),
 		})
 
-		// await logHelper(res)
+		await logHelper(res)
 
 		expect(res.status).toBe(400)
 		expect(res.headers.get("content-type")).toMatch(/application\/json/i)

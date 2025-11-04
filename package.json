@@ -35,7 +35,8 @@
 		"@remix-run/fetch-router": "^0.6.0",
 		"@remix-run/headers": "^0.14.0",
 		"agents": "^0.2.13",
-		"zod": "^4.0.16"
+		"zod": "^3.23.8",
+		"zod-to-json-schema": "^3.24.1"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.2.6",
@@ -60,7 +61,6 @@
 		"wrangler": "^4.45.3"
 	},
 	"overrides": {
-		"zod": "^4.0.16",
 		"vitest": "^3.2.4",
 		"@vitest/utils": "^3.2.4",
 		"@vitest/runner": "^3.2.4",

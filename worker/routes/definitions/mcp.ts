@@ -31,13 +31,14 @@ export default {
 			return getDreamsMCP().fetch(request, env, ctx)
 		},
 		async action({ request, storage }) {
-			console.error("HERE 2 - !!!!!!!!!!!!!!")
-			console.error(request)
 			const { origin } = new URL(request.url)
 			const env = storage.get(ENV_KEY)
 			const ctx = storage.get(CTX_KEY)
 
 			ctx.props.baseUrl = origin
+
+			console.error("HERE 2 - !!!!!!!!!!!!!!")
+			console.error(request)
 			return getDreamsMCP().fetch(request, env, ctx)
 		},
 	} satisfies RouteHandlers<typeof baseAPI.mcp>,

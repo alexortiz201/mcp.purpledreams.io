@@ -20,8 +20,6 @@ export default defineConfig({
 		rolldownOptions: {
 			// ✅ Leave Workers virtual modules unresolved for workerd to handle
 			external: [/^cloudflare:/],
-			// shimMissingExports: true,
-
 			// optional: keep everything in a single file
 			output: { inlineDynamicImports: true },
 			// optional: quiet the “unresolved import” warnings if they bug you
