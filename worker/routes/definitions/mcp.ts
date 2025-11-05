@@ -3,6 +3,7 @@ import type { RouteHandlers } from "@remix-run/fetch-router"
 import { PurpleDreamsMCP } from "../../index.tsx"
 // import { D1Store } from "../../life-os/store/adapters/d1-store"
 import { CTX_KEY, ENV_KEY } from "../middleware/inject-context.ts"
+import { streamLogger } from "../middleware/utils-stream.ts"
 import type { baseAPI } from "../routes.ts"
 
 let PURPLE_DREAMS_MCP_INSTANCE: any | null = null
@@ -18,11 +19,9 @@ const getDreamsMCP = () => {
 }
 
 export default {
-	use: [], // [withContext] Example middleware
+	use: [streamLogger({ log: console.info, corrolationId: "@router" })], // [withContext] Example middleware
 	handlers: {
 		async index({ request, storage }) {
-			console.error("HERE 1 - !!!!!!!!!!!!!!")
-			console.error(request)
 			const { origin } = new URL(request.url)
 			const env = storage.get(ENV_KEY)
 			const ctx = storage.get(CTX_KEY)
@@ -37,8 +36,6 @@ export default {
 
 			ctx.props.baseUrl = origin
 
-			console.error("HERE 2 - !!!!!!!!!!!!!!")
-			console.error(request)
 			return getDreamsMCP().fetch(request, env, ctx)
 		},
 	} satisfies RouteHandlers<typeof baseAPI.mcp>,

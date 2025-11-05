@@ -19,6 +19,7 @@ export class PurpleDreamsMCP extends McpAgent<Env, State, Props> {
 		}
 	)
 	async init() {
+		// await registerTools(this)
 		await registerWidgets(this)
 	}
 	requireDomain() {

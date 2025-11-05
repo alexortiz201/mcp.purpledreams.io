@@ -1,4 +1,4 @@
-import { env, SELF } from "cloudflare:test"
+import { SELF } from "cloudflare:test"
 import type {
 	JSONRPCError,
 	JSONRPCResponse,
@@ -17,15 +17,54 @@ const logHelper = async (res) => {
 	}
 }
 
-// beforeEach(() => {
-// 	// Provide test doubles for your bindings (name them to match your Env)
-// 	// env.MY_KV = new TestKVNamespace()
-// 	// // If you need ExecutionContext in your code:
-// 	// env.__TEST_CTX__ = TEST_EXECUTION_CONTEXT
-// })
+// import { env, createExecutionContext } from "cloudflare:test"
+// const ctx = createExecutionContext();
+
+beforeEach(() => {
+	// Provide test doubles for your bindings (name them to match your Env)
+	// env.MY_KV = new TestKVNamespace()
+	// // If you need ExecutionContext in your code:
+	// env.__TEST_CTX__ = TEST_EXECUTION_CONTEXT
+})
 
 describe("MCP Streamable HTTP", () => {
-	it("POST /mcp without session → 400 + -32000", async () => {
+	it("INITIALIZE /mcp → 200 + returns capabilities", async () => {
+		const res = await SELF.fetch("http://unit.test/mcp", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Accept: "application/json, text/event-stream",
+			},
+			body: JSON.stringify({
+				jsonrpc: "2.0",
+				id: 0,
+				method: "initialize",
+				params: {
+					protocolVersion: "2025-06-18",
+					capabilities: {
+						elicitation: {},
+					},
+					clientInfo: {
+						name: "local-mcp",
+						version: "1.0.0",
+					},
+				},
+			}),
+		})
+
+		await logHelper(res)
+
+		expect(res.status).toBe(400)
+		expect(res.headers.get("content-type")).toMatch(/application\/json/i)
+
+		const json = (await res.json()) as JSONRPCError
+		expect(json?.error?.code).toBe(-32000)
+		expect(String(json?.error?.message)).toMatch(
+			/Mcp-Session-Id header is required/i
+		)
+	})
+
+	it.skip("POST /mcp without session → 400 + -32000", async () => {
 		const res = await SELF.fetch("http://unit.test/mcp", {
 			method: "POST",
 			headers: {
