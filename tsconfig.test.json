@@ -1,5 +1,7 @@
 {
 	"compilerOptions": {
+		// "jsx": "react-jsx",
+		// "jsxImportSource": "@remix-run/dom",
 		"module": "ESNext",
 		"target": "ES2022",
 		"moduleResolution": "bundler",
@@ -14,6 +16,9 @@
 	"include": [
 		"tests/**/*.ts",
 		"tests/**/*.d.ts",
+		// "tests/**/*.tsx",
+		// "worker/**/*.ts",
+		// "worker/**/*.tsx",
 		"./types/reset.d.ts",
 		"./types/worker-configuration.d.ts"
 	]

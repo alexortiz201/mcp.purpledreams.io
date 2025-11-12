@@ -1,14 +1,14 @@
 import type { RouteHandlers } from "@remix-run/fetch-router"
 // import type { SSEEdgeClientTransport } from "agents/mcp"
-import { PurpleDreamsMCP } from "../../index.tsx"
+import { PurpleDreamsMCP } from "../../index"
 // import { D1Store } from "../../life-os/store/adapters/d1-store"
-import { CTX_KEY, ENV_KEY } from "../middleware/inject-context.ts"
-import { streamLogger } from "../middleware/utils-stream.ts"
-import type { baseAPI } from "../routes.ts"
+import { CTX_KEY, ENV_KEY } from "../middleware/inject-context"
+import { exchangeLoggerMiddleware } from "../middleware/utils-stream"
+import type { baseAPI } from "../routes"
 
 let PURPLE_DREAMS_MCP_INSTANCE: any | null = null
 
-const getDreamsMCP = () => {
+export const getDreamsMCP = () => {
 	if (PURPLE_DREAMS_MCP_INSTANCE) return PURPLE_DREAMS_MCP_INSTANCE
 
 	PURPLE_DREAMS_MCP_INSTANCE = PurpleDreamsMCP.serve("/mcp", {
@@ -19,7 +19,12 @@ const getDreamsMCP = () => {
 }
 
 export default {
-	use: [streamLogger({ log: console.info, corrolationId: "@router" })], // [withContext] Example middleware
+	use: [
+		exchangeLoggerMiddleware({
+			log: console.info,
+			corrolationId: "@mcp /handlers",
+		}),
+	],
 	handlers: {
 		async index({ request, storage }) {
 			const { origin } = new URL(request.url)

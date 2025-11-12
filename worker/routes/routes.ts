@@ -15,8 +15,8 @@ export const handlers = {
 
 export const baseAPI = route("/", {
 	system: {
-		health: {
-			index: { method: "GET", pattern: "/health" },
+		healthcheck: {
+			index: { method: "GET", pattern: "/healthcheck" },
 		},
 	},
 	// 🧪 Widget preview

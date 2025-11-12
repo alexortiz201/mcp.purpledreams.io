@@ -1,10 +1,10 @@
 import type { RouteHandlers } from "@remix-run/fetch-router"
-import type { baseAPI } from "../routes.ts"
+import type { baseAPI } from "../routes"
 
 export default {
 	use: [], // [addContextToStorage] Example middleware
 	handlers: {
-		health: {
+		healthcheck: {
 			async index() {
 				return new Response("ok")
 			},

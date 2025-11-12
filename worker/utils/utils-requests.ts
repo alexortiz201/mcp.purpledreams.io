@@ -89,6 +89,7 @@ export function takeRequestMeta(req: Request): RequestMeta | undefined {
 	return meta
 }
 
+// TODO Make actual middleware
 export const withCorsMiddleware: Middleware = async (context, next) => {
 	const corsHeaders = new Headers(CORS_HEADERS)
 	if (!corsHeaders) return next(context)

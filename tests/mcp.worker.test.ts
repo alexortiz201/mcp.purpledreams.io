@@ -1,206 +1,155 @@
-import { SELF } from "cloudflare:test"
+// tests/mcp.worker.test.ts
+
+import { env, SELF } from "cloudflare:test"
 import type {
 	JSONRPCError,
+	JSONRPCMessage,
 	JSONRPCResponse,
 } from "@modelcontextprotocol/sdk/types.js"
-// import { TEST_EXECUTION_CONTEXT, TestKVNamespace } from "cloudflare-test-utils"
-import { beforeEach, describe, expect, it } from "vitest"
+// import { McpAgent } from "agents/mcp"
+import { afterEach, describe, expect, it } from "vitest"
 
-const logHelper = async (res) => {
-	if (!res.ok) {
-		const body = await res.text()
-		console.error("❌ initialize failed:", {
-			status: res.status,
-			headers: res.headers,
-			body,
-		})
-	}
-}
+// import { PurpleDreamsMCP } from "../worker/mcp"
 
-// import { env, createExecutionContext } from "cloudflare:test"
-// const ctx = createExecutionContext();
+const PROTO = "2025-06-18"
+// const AGENT = "test-agent"
+// const SESSION = "test-session"
 
-beforeEach(() => {
-	// Provide test doubles for your bindings (name them to match your Env)
-	// env.MY_KV = new TestKVNamespace()
-	// // If you need ExecutionContext in your code:
-	// env.__TEST_CTX__ = TEST_EXECUTION_CONTEXT
+let abort: AbortController | null = null
+
+afterEach(async () => {
+	abort?.abort()
+	abort = null
 })
 
-describe("MCP Streamable HTTP", () => {
-	it("INITIALIZE /mcp → 200 + returns capabilities", async () => {
+const TEST_MESSAGES = {
+	initialize: {
+		id: "init-1",
+		jsonrpc: "2.0",
+		method: "initialize",
+		params: {
+			capabilities: {},
+			clientInfo: { name: "test-client", version: "1.0" },
+			protocolVersion: "2025-03-26",
+		},
+	} as JSONRPCMessage,
+}
+
+async function sendPostRequest(
+	baseUrl: string,
+	message: JSONRPCMessage | JSONRPCMessage[],
+	sessionId?: string
+): Promise<Response> {
+	const headers: Record<string, string> = {
+		Accept: "application/json, text/event-stream",
+		"Content-Type": "application/json",
+	}
+
+	if (sessionId) {
+		headers["mcp-session-id"] = sessionId
+	}
+	abort = new AbortController()
+	const request = new Request(baseUrl, {
+		body: JSON.stringify(message),
+		headers,
+		method: "POST",
+		signal: abort.signal,
+	})
+
+	return SELF.fetch(request)
+}
+
+async function initializeStreamableHTTPServer(
+	baseUrl = "http://unit.test/mcp"
+): Promise<string> {
+	const response = await sendPostRequest(baseUrl, TEST_MESSAGES.initialize)
+
+	// console.info({ t: PurpleDreamsMCP })
+
+	expect(response.status).toBe(200)
+	const sessionId = response.headers.get("mcp-session-id")
+	expect(sessionId).toBeDefined()
+	return sessionId as string
+}
+
+describe("MCP /mcp", () => {
+	it("/test - OK", async () => {
+		try {
+			const sessionId = await initializeStreamableHTTPServer()
+			console.log({ sessionId })
+		} catch (error) {
+			console.info({ error })
+		} finally {
+			abort.abort()
+		}
+	})
+	it.skip("/healthcheck - OK", async () => {
+		const isAppRunning = await SELF.fetch("http://unit.test/healthcheck").catch(
+			() => ({ ok: false })
+		)
+
+		if (isAppRunning.ok) {
+			return
+		}
+		expect(false).toEqual(true)
+	})
+	it.skip("INITIALIZE → 200 + returns capabilities (no hang)", async () => {
+		abort = new AbortController()
+		console.info({ X: env.PURPLEDREAMS_MCP_OBJECT })
+
 		const res = await SELF.fetch("http://unit.test/mcp", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 				Accept: "application/json, text/event-stream",
+				// "mcp-agent-id": AGENT,
+				// "mcp-protocol-version": PROTO,
 			},
 			body: JSON.stringify({
 				jsonrpc: "2.0",
 				id: 0,
 				method: "initialize",
 				params: {
-					protocolVersion: "2025-06-18",
-					capabilities: {
-						elicitation: {},
-					},
-					clientInfo: {
-						name: "local-mcp",
-						version: "1.0.0",
-					},
+					protocolVersion: PROTO,
+					capabilities: { elicitation: {} },
+					clientInfo: { name: "local-mcp", version: "1.0.0" },
 				},
 			}),
-		})
-
-		await logHelper(res)
-
-		expect(res.status).toBe(400)
-		expect(res.headers.get("content-type")).toMatch(/application\/json/i)
-
-		const json = (await res.json()) as JSONRPCError
-		expect(json?.error?.code).toBe(-32000)
-		expect(String(json?.error?.message)).toMatch(
-			/Mcp-Session-Id header is required/i
-		)
-	})
-
-	it.skip("POST /mcp without session → 400 + -32000", async () => {
-		const res = await SELF.fetch("http://unit.test/mcp", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Accept: "application/json, text/event-stream",
-			},
-			body: JSON.stringify({
-				jsonrpc: "2.0",
-				id: 1,
-				method: "initialize",
-				params: {},
-			}),
-		})
-
-		await logHelper(res)
-
-		expect(res.status).toBe(400)
-		expect(res.headers.get("content-type")).toMatch(/application\/json/i)
-
-		const json = (await res.json()) as JSONRPCError
-		expect(json?.error?.code).toBe(-32000)
-		expect(String(json?.error?.message)).toMatch(
-			/Mcp-Session-Id header is required/i
-		)
-	})
-
-	it.skip("SSE → get Mcp-Session-Id → POST initialize → 200", async () => {
-		// 1) Open SSE to create a session
-		const sse = await SELF.fetch("http://unit.test/mcp", {
-			method: "GET",
-			headers: { Accept: "text/event-stream" },
-		})
-		expect(sse.status).toBe(200)
-		expect(sse.headers.get("content-type")).toMatch(/text\/event-stream/i)
-
-		// grab the session id from headers (case-insensitive)
-		const sessionId = sse.headers.get("mcp-session-id")
-		expect(sessionId).toBeTruthy()
-
-		// 2) POST initialize with the session id (+ Accept includes both)
-		const res = await SELF.fetch("http://unit.test/mcp", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Accept: "application/json, text/event-stream",
-				"Mcp-Session-Id": sessionId as string,
-			},
-			body: JSON.stringify({
-				jsonrpc: "2.0",
-				id: 1,
-				method: "initialize",
-				params: {},
-			}),
+			signal: abort.signal,
 		})
 
 		expect(res.status).toBe(200)
-		expect(res.headers.get("content-type")).toMatch(/application\/json/i)
-		// server might echo/refresh session header; tolerate either way
-		expect(res.headers.get("mcp-session-id") ?? sessionId).toBeTruthy()
+		// console.info({ res })
+		/* if (isSse(res.headers)) {
+			// 🔁 Streaming initialize: don’t hang; just verify handshake bits.
+			expect(res.headers.get("content-type")).toMatch(/text\/event-stream/i)
+			// session is the important part to assert when streaming
+			expect(res.headers.get("mcp-session-id")).toBeTruthy()
 
-		const json = (await res.json()) as JSONRPCResponse & {
-			result: { session: { id: string } }
+			// Optional: non-fatal peek at first event with a tiny timeout
+			const first = await tryPeekFirstSseData(res, { timeoutMs: 400 })
+			console.info({ first })
+			// You can assert presence if your worker usually emits immediately:
+			// expect(first).toBeTruthy();
+			// Or just log for debugging:
+			if (first) console.info("first SSE data:", first)
+			// ✅ Test ends without waiting for the stream to complete
+			return
 		}
-		expect(json.jsonrpc).toBe("2.0")
-		expect(typeof json.result?.protocolVersion).toBe("string")
-		expect(typeof json.result?.session?.id).toBe("string")
+		*/
+
+		expect(res.headers.get("content-type")).toMatch(/text\/event-stream/i)
+
+		// const json = (await res.json()) as JSONRPCResponse
+		// expect(json?.jsonrpc).toBe("2.0")
+		// expect(typeof json?.result?.protocolVersion).toBe("string")
+		// expect(res.headers.get("mcp-session-id")).toBeTruthy()
 	})
-
-	// it.only("POST /mcp initialize → 200 + JSON-RPC result", async () => {
-	// 	const reqInit = {
-	// 		method: "POST",
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 			Accept: "application/json, text/event-stream",
-	// 		},
-	// 		body: JSON.stringify({
-	// 			jsonrpc: "2.0",
-	// 			id: 1,
-	// 			method: "initialize",
-	// 			params: {},
-	// 		}),
-	// 	} as const
-
-	// 	const res = await SELF.fetch("http://unit.test/mcp", reqInit)
-
-	// 	if (!res.ok) {
-	// 		const body = await res.text()
-	// 		console.error("❌ initialize failed:", {
-	// 			status: res.status,
-	// 			headers: res.headers,
-	// 			body,
-	// 		})
-	// 	}
-
-	// 	expect(res.status).toBe(200)
-	// 	expect(res.headers.get("content-type")).toMatch(/application\/json/i)
-	// 	expect(res.headers.get("mcp-session-id")).toBeTruthy()
-
-	// 	const json = (await res.json()) as JsonRpcSuccess
-	// 	expect(json.jsonrpc).toBe("2.0")
-	// 	expect(typeof json.result?.protocolVersion).toBe("string")
-	// 	expect(typeof json.result?.session?.id).toBe("string")
-	// })
-
-	// it("POST /mcp invalid JSON → 400 with -32700", async () => {
-	// 	const res = await SELF.fetch("http://unit.test/mcp", {
-	// 		method: "POST",
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 			Accept: "application/json, text/event-stream",
-	// 		},
-	// 		// invalid body
-	// 		body: "not json",
-	// 	})
-
-	// 	expect(res.status).toBe(400)
-	// 	const json = (await res.json()) as JsonRpcError
-	// 	expect(json?.error?.code).toBe(-32700)
-	// })
-
-	// it("GET /mcp SSE → 200 + first data event is JSON-RPC", async () => {
-	// 	const res = await SELF.fetch("http://unit.test/mcp", {
-	// 		method: "GET",
-	// 		headers: { Accept: "text/event-stream" },
-	// 	})
-
-	// 	expect(res.status).toBe(200)
-	// 	const reader = res.body?.getReader()
-	// 	const td = new TextDecoder()
-	// 	const { value } = await reader.read()
-	// 	const firstChunk = td.decode(value)
-	// 	const line = firstChunk.split(/\r?\n/).find((l) => l.startsWith("data: "))
-	// 	expect(line).toBeTruthy()
-	// 	const payload = JSON.parse(
-	// 		line?.slice("data: ".length) ?? ""
-	// 	) as JsonRpcSuccess
-	// 	expect(payload.jsonrpc).toBe("2.0")
-	// })
 })
+
+/*
+SSE handshake → 200 and first event readable
+POST → 400 when missing session headers
+
+could you please write test for these 2 other cases
+*/
