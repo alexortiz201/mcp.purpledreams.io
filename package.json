@@ -19,11 +19,15 @@
 		"preview": "vite preview",
 		"generate-types": "wrangler types ./types/worker-configuration.d.ts",
 		"pretypecheck": "npm run generate-types",
-		"pretest": "vite build -c vite.config.tests.bundle.ts",
-		"test": "DEBUG=vitest-pool-workers,wrangler:* VITEST_TS_NODE_PROJECT=tsconfig.test.json vitest run -c vite.config.tests.ts",
+		"test": "VITEST_TS_NODE_PROJECT=tsconfig.test.json vitest run -c vite.config.tests.ts",
 		"typecheck": "tsc --noEmit",
 		"inspect": "inspector",
 		"validate": "concurrently --kill-others-on-fail -n lint-format-fix,build,typecheck -c green,yellow,blue,magenta \"npm run lint-format-fix\" \"npm run build\" \"npm run typecheck\""
+	},
+	"engines": {
+		"node": ">=24.10.0",
+		"npm": ">=11.6.0",
+		"git": ">=2.37.0"
 	},
 	"dependencies": {
 		"@epic-web/invariant": "^1.0.0",
@@ -53,6 +57,7 @@
 		"cloudflare-test-utils": "^1.0.2",
 		"concurrently": "^9.2.1",
 		"execa": "^9.6.0",
+		"get-port": "^7.1.0",
 		"globals": "^16.4.0",
 		"miniflare": "^4.20251011.1",
 		"typescript": "^5.9.3",

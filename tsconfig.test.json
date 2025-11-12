@@ -1,25 +1,17 @@
 {
+	"extends": "@epic-web/config/typescript",
 	"compilerOptions": {
-		// "jsx": "react-jsx",
-		// "jsxImportSource": "@remix-run/dom",
-		"module": "ESNext",
-		"target": "ES2022",
-		"moduleResolution": "bundler",
 		"types": [
 			"vitest",
 			"@cloudflare/workers-types",
 			"@cloudflare/vitest-pool-workers"
-		],
-		"lib": ["ES2022", "DOM"],
-		"skipLibCheck": true
+		]
 	},
 	"include": [
+		"worker/**/*.ts",
+		"worker/**/*.tsx",
 		"tests/**/*.ts",
-		"tests/**/*.d.ts",
-		// "tests/**/*.tsx",
-		// "worker/**/*.ts",
-		// "worker/**/*.tsx",
-		"./types/reset.d.ts",
-		"./types/worker-configuration.d.ts"
+		"tests/types/**/*.d.ts",
+		"types/**/*.d.ts"
 	]
 }

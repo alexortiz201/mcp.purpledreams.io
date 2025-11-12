@@ -12,7 +12,7 @@ export const getDreamsMCP = () => {
 	if (PURPLE_DREAMS_MCP_INSTANCE) return PURPLE_DREAMS_MCP_INSTANCE
 
 	PURPLE_DREAMS_MCP_INSTANCE = PurpleDreamsMCP.serve("/mcp", {
-		binding: "PURPLEDREAMS_MCP_OBJECT",
+		binding: "PURPLE_DREAMS_MCP_OBJECT",
 	})
 
 	return PURPLE_DREAMS_MCP_INSTANCE
@@ -20,10 +20,10 @@ export const getDreamsMCP = () => {
 
 export default {
 	use: [
-		exchangeLoggerMiddleware({
-			log: console.info,
-			corrolationId: "@mcp /handlers",
-		}),
+		// exchangeLoggerMiddleware({
+		// 	log: console.info,
+		// 	corrolationId: "@mcp /handlers",
+		// }),
 	],
 	handlers: {
 		async index({ request, storage }) {

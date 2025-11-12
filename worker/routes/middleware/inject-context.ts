@@ -1,6 +1,6 @@
 import { createStorageKey, type Middleware } from "@remix-run/fetch-router"
 import type { Props } from "../../mcp"
-import { takeRequestMeta } from "../../utils/utils-requests"
+import { takeRequestMeta } from "./cors"
 
 export const ENV_KEY = createStorageKey<Env>()
 export const CTX_KEY = createStorageKey<ExecutionContext<Props>>()

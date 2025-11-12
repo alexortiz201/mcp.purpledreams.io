@@ -2,14 +2,14 @@
 	"extends": "./tsconfig.node.json",
 	"compilerOptions": {
 		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.worker.tsbuildinfo",
+		// "types": ["@cloudflare/workers-types"],
 		"jsx": "react-jsx",
 		"jsxImportSource": "@remix-run/dom"
 	},
 	"include": [
 		"worker",
 		"./types/reset.d.ts",
-		"./types/worker-configuration.d.ts",
-		"life-os/life-os-rebuilt/start_experience_setup.runner.mjs"
+		"./types/worker-configuration.d.ts"
 	],
 	"exclude": ["worker/widgets"]
 }

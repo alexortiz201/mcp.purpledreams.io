@@ -1,17 +1,13 @@
 import { createRouter } from "@remix-run/fetch-router"
 // import { logger } from "@remix-run/fetch-router/logger-middleware"
 import type { Props } from "../mcp.tsx"
-import { setRequestMeta } from "../utils/utils-requests.ts"
+import { setRequestMeta } from "./middleware/cors.ts"
 import { injectContext } from "./middleware/inject-context.ts"
-// import { exchangeLoggerMiddleware } from "./middleware/utils-stream.ts"
 import { handlers, routes } from "./routes.ts"
 
 const router = createRouter()
 
 router.use(injectContext)
-// router.use(
-// 	exchangeLoggerMiddleware({ log: console.info, corrolationId: "@router" })
-// )
 
 // if (process.env.NODE_ENV === "development") router.use(logger())
 

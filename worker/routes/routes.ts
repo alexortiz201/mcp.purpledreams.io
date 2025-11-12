@@ -15,6 +15,13 @@ export const handlers = {
 
 export const baseAPI = route("/", {
 	system: {
+		// oauth-protected-resource
+		".well-known/oauth-authorization-server": {
+			index: {
+				method: "GET",
+				pattern: "/.well-known/oauth-authorization-server",
+			},
+		},
 		healthcheck: {
 			index: { method: "GET", pattern: "/healthcheck" },
 		},
@@ -51,5 +58,5 @@ export const lifeOSAPI = route("/life-os", {
 export const routes = {
 	...baseAPI,
 	// ...routesAPI,
-	// ...lifeOSAPI,
+	...lifeOSAPI,
 }

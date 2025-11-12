@@ -1,6 +1,12 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "purpledreams-mcp",
+	"main": "./worker/index.ts",
+	"tsconfig": "./tsconfig.worker.json",
+	"assets": {
+		"directory": "./dist/public",
+		"binding": "ASSETS"
+	},
 	"compatibility_date": "2025-10-11",
 	"compatibility_flags": [
 		"nodejs_compat",
@@ -9,12 +15,6 @@
 		"enable_nodejs_http_modules",
 		"enable_nodejs_perf_hooks_module"
 	],
-	"main": "./worker/index.tsx",
-	"assets": {
-		"directory": "./dist/public",
-		"binding": "ASSETS"
-	},
-	"tsconfig": "./tsconfig.worker.json",
 	"migrations": [
 		{
 			"new_sqlite_classes": ["PurpleDreamsMCP"],
@@ -31,7 +31,11 @@
 		]
 	},
 	"d1_databases": [
-		{ "binding": "DB", "database_name": "lifeos", "database_id": "lifeos" }
+		{
+			"binding": "DB",
+			"database_name": "lifeos",
+			"database_id": "lifeos"
+		}
 	],
 	"observability": {
 		"enabled": true
